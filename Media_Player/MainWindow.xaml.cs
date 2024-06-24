@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Diagnostics;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,20 @@ namespace Media_Player
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediaPlayerVM.MediaElementVM.IsPlaying)
+            {
+                MediaElement.Pause();
+                MediaPlayerVM.MediaElementVM.IsPlaying = false;
+            }
+            else
+            {
+                MediaElement.Play();
+                MediaPlayerVM.MediaElementVM.IsPlaying = true;
+            }
         }
     }
 }
