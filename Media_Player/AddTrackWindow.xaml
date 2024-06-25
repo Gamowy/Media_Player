@@ -9,6 +9,7 @@
         ResizeMode="NoResize"
         Title="Dodaj nowy utwór" Height="500" Width="400"
         Background="Gray"
+        WindowStartupLocation="CenterScreen"
         >
     <Window.DataContext>
         <vm:AddTrack x:Name="AddTrackVM"/>
@@ -22,6 +23,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>
             <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
@@ -36,27 +39,31 @@
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.1*"/>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.1*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="1" Grid.Column="1" Content="Nazwa utworu" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="2" Grid.Column="1" TextAlignment="Center"/>
-        <Label Grid.Row="3" Grid.Column="1" Content="Artysta" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="4" Grid.Column="1" TextAlignment="Center"/>
-        <Label Grid.Row="5" Grid.Column="1" Content="Album" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="6" Grid.Column="1" TextAlignment="Center"/>
-        <Label Grid.Row="7" Grid.Column="1" Content="Gatunek" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="8" Grid.Column="1" TextAlignment="Center"/>
+        <Label Grid.Row="1" Grid.Column="1" Content="DODAJ NOWY UTWÓR" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="1" Content="Nazwa utworu" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="4" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="5" Grid.Column="1" Content="Artysta" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="6" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="7" Grid.Column="1" Content="Album" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="8" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
         <Label Grid.Row="9" Grid.Column="1" Content="Gatunek" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="10" Grid.Column="1" TextAlignment="Center"/>
-        <Label Grid.Row="11" Grid.Column="1" Content="Rok wydania" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <TextBox Grid.Row="12" Grid.Column="1" TextAlignment="Center"/>
-        <Label Grid.Row="13" Grid.Column="1" Content="Plik" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        <Grid Grid.Row="14" Grid.Column="1">
+        <TextBox Grid.Row="10" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="11" Grid.Column="1" Content="Gatunek" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="12" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="13" Grid.Column="1" Content="Rok wydania" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <TextBox Grid.Row="14" Grid.Column="1" TextAlignment="Center" VerticalContentAlignment="Center"/>
+        <Label Grid.Row="15" Grid.Column="1" Content="Plik" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        <Grid Grid.Row="16" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" TextAlignment="Center"/>
+            <TextBox Grid.Column="0" TextAlignment="Center" VerticalContentAlignment="Center"/>
             <Button Grid.Column="2" Content="Wybierz"/>
         </Grid>
+        <Button Grid.Row="18" Grid.Column="1" Content="Dodaj"/>
     </Grid>
 </Window>

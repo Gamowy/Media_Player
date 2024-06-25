@@ -22,11 +22,14 @@ namespace Media_Player.ViewModel
         public MediaPlayer()
         {
             MediaElementVM = new MediaElementViewModel();
+            addTrackWindow = null;
             playlist = null;
             MediaPlayMode = PlayMode.None;
         }
 
         #region Properties
+
+        AddTrackWindow? addTrackWindow;
 
         private PlayMode playmode;
         public PlayMode MediaPlayMode 
@@ -185,6 +188,11 @@ namespace Media_Player.ViewModel
 
             }
         }
+        private void openAddTrackWindow()
+        {
+            addTrackWindow = new AddTrackWindow();
+            addTrackWindow.Show();
+        }
         #endregion
 
         #region Commands
@@ -217,6 +225,14 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => savePlaylist(), canExecute => (playlist != null));
+            }
+        }
+
+        public ICommand AddNewTrack
+        {
+            get
+            {
+                return new RelayCommand(execute => openAddTrackWindow(), canExecute => (playlist != null));
             }
         }
         #endregion
