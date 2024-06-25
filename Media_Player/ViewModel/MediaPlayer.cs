@@ -13,6 +13,7 @@ namespace Media_Player.ViewModel
     using System.Diagnostics.Tracing;
     using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Markup.Localizer;
 
     public enum PlayMode { None, Video, Playlist};
 
@@ -21,6 +22,7 @@ namespace Media_Player.ViewModel
         public MediaPlayer()
         {
             MediaElementVM = new MediaElementViewModel();
+            playlist = null;
             MediaPlayMode = PlayMode.None;
         }
 
@@ -36,14 +38,38 @@ namespace Media_Player.ViewModel
             set
             {
                 playmode = value;
-                if (value == PlayMode.None || value == PlayMode.Playlist)
-                {
-                    MediaElementVM.MediaUri = null;
+                switch (value) {
+                    case PlayMode.None:
+                        MediaElementVM.MediaUri = null;
+                        PlaylistName = "Playlista";
+                        break;
+                    case PlayMode.Video:
+                        PlaylistName = "Playlista";
+                        break;
+                    case PlayMode.Playlist:
+                        MediaElementVM.MediaUri = null;
+                        PlaylistName = playlist!.Name;
+                        break;
                 }
                 onPropertyChanged(nameof(PlayMode));
             }
         }
-        
+
+
+        private string? playlistName;
+        public string? PlaylistName
+        {
+            get
+            {
+                return playlistName;
+            }
+            set
+            {
+                playlistName = value;
+                onPropertyChanged(nameof(PlaylistName));
+            }
+        }
+
         public Playlist? playlist;
 
         private ObservableCollection<Track>? tracks = null;
@@ -95,6 +121,7 @@ namespace Media_Player.ViewModel
             catch (Exception ex)
             {
                 playlist = null;
+                PlaylistName = null;
                 Tracks = null;
                 MediaPlayMode = PlayMode.None;
                 MessageBox.Show($"Błąd podczas tworzenia playlisty:\n{ex.Message}", "Błąd zapisu!", MessageBoxButton.OK, MessageBoxImage.Error);

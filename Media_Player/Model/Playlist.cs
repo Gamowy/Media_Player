@@ -21,14 +21,14 @@ namespace Media_Player.Model
         private const string INSERT_TRACKS = "INSERT INTO tracks VALUES (@track_id, @track_name, @artist, @album, @genre, @release_year, @duration, @file_path)";
         #endregion
 
-        public string PlaylistName { get; private set; }
-        public string PlaylistPath { get; private set; }
+        public string Name { get; private set; }
+        public string Path { get; private set; }
         public ObservableCollection<Track> Tracks { get; private set; }
 
         public Playlist(string playlistname, string playlistPath)
         {
-            PlaylistName = playlistname;
-            PlaylistPath = playlistPath;
+            Name = playlistname;
+            Path = playlistPath;
             Tracks = new ObservableCollection<Track>();
         }
 
@@ -36,12 +36,12 @@ namespace Media_Player.Model
         {
             try
             {
-                if (!File.Exists(PlaylistPath))
+                if (!File.Exists(Path))
                 {
-                    File.Delete(PlaylistPath);
+                    File.Delete(Path);
                 }
-                SQLiteConnection.CreateFile(PlaylistPath);
-                SQLiteConnection connection = DbConnection.Instance.getConnection(PlaylistPath);
+                SQLiteConnection.CreateFile(Path);
+                SQLiteConnection connection = DbConnection.Instance.getConnection(Path);
                 connection.Open();
                 // create tracks table
                 SQLiteCommand createCommand = new SQLiteCommand(CREATE_TRACKS_TB, connection);
@@ -58,7 +58,7 @@ namespace Media_Player.Model
         {
             try
             {
-                SQLiteConnection connection = DbConnection.Instance.getConnection(PlaylistPath);
+                SQLiteConnection connection = DbConnection.Instance.getConnection(Path);
                 connection.Open();
 
                 // read questions from database
@@ -108,7 +108,7 @@ namespace Media_Player.Model
         {
             try
             {
-                SQLiteConnection connection = DbConnection.Instance.getConnection(PlaylistPath);
+                SQLiteConnection connection = DbConnection.Instance.getConnection(Path);
                 connection.Open();
 
                 // delete old track and insert updated tracks
