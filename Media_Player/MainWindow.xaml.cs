@@ -30,9 +30,12 @@ namespace Media_Player
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+
+            MediaPlayerVM.MediaElementVM.PlayRequest += (sender, e) => Play_Request();
+            MediaPlayerVM.MediaElementVM.VolumeButtonUpdate += (sender, e) => Change_Volume_Button_Image();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object? sender, EventArgs e)
         {
             if ((MediaElement.Source != null) && (MediaElement.NaturalDuration.HasTimeSpan) && (!sliderDragged))
             {
@@ -43,37 +46,50 @@ namespace Media_Player
             }
         }
 
-        private void ProgressSlider_DragStarted(object sender, DragStartedEventArgs e)
+        private void ProgressSlider_DragStarted(object? sender, DragStartedEventArgs e)
         {
             sliderDragged = true;
         }
 
-        private void ProgressSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+        private void ProgressSlider_DragCompleted(object? sender, DragCompletedEventArgs e)
         {
             sliderDragged = false;
             MediaElement.Position = TimeSpan.FromSeconds(ProgressSlider.Value);
         }
 
-        private void ProgressSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ProgressSlider_ValueChanged(object? sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TimeSpan timeElapsed=TimeSpan.FromSeconds(ProgressSlider.Value);
             ProgressLabel.Content =$"{ (int)timeElapsed.TotalMinutes}:{timeElapsed.Seconds:00}"+"/"+durationString;
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void Play_Request()
         {
             Trace.WriteLine("play");
             if (MediaPlayerVM.MediaElementVM.IsPlaying)
             {
                 MediaElement.Pause();
                 MediaPlayerVM.MediaElementVM.IsPlaying = false;
+                PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/play.png", UriKind.Relative));
             }
             else
             {
                 MediaElement.Play();
                 MediaPlayerVM.MediaElementVM.IsPlaying = true;
+                PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/pause.png", UriKind.Relative));
             }
         }
 
+        private void Change_Volume_Button_Image()
+        {
+            if (VolumeSlider.Value == 0)
+            {
+                VolumeButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/mute.png", UriKind.Relative));
+            }
+            else
+            {
+                VolumeButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/volume.png", UriKind.Relative));
+            }
+        }
     }
 }
