@@ -30,9 +30,11 @@ namespace Media_Player
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
+
+            MediaPlayerVM.MediaElementVM.PlayRequest += (sender, e) => Play_Request();
         }
 
-        private void timer_Tick(object sender, EventArgs e)
+        private void timer_Tick(object? sender, EventArgs e)
         {
             if ((MediaElement.Source != null) && (MediaElement.NaturalDuration.HasTimeSpan) && (!sliderDragged))
             {
@@ -43,24 +45,24 @@ namespace Media_Player
             }
         }
 
-        private void ProgressSlider_DragStarted(object sender, DragStartedEventArgs e)
+        private void ProgressSlider_DragStarted(object? sender, DragStartedEventArgs e)
         {
             sliderDragged = true;
         }
 
-        private void ProgressSlider_DragCompleted(object sender, DragCompletedEventArgs e)
+        private void ProgressSlider_DragCompleted(object? sender, DragCompletedEventArgs e)
         {
             sliderDragged = false;
             MediaElement.Position = TimeSpan.FromSeconds(ProgressSlider.Value);
         }
 
-        private void ProgressSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void ProgressSlider_ValueChanged(object? sender, RoutedPropertyChangedEventArgs<double> e)
         {
             TimeSpan timeElapsed=TimeSpan.FromSeconds(ProgressSlider.Value);
             ProgressLabel.Content =$"{ (int)timeElapsed.TotalMinutes}:{timeElapsed.Seconds:00}"+"/"+durationString;
         }
 
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
+        private void Play_Request()
         {
             Trace.WriteLine("play");
             if (MediaPlayerVM.MediaElementVM.IsPlaying)
@@ -74,6 +76,5 @@ namespace Media_Player
                 MediaPlayerVM.MediaElementVM.IsPlaying = true;
             }
         }
-
     }
 }

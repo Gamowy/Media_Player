@@ -22,17 +22,21 @@ namespace Media_Player.ViewModel
         }
 
         #region Properties
-        private Uri _mediaUri;
-        public Uri MediaUri
+        private Uri? _mediaUri;
+        public Uri? MediaUri
         {
             get
             { return _mediaUri; }
             set
             {
                 _mediaUri = value;
+                IsPlaying = false;
+                playMedia();
                 onPropertyChanged(nameof(MediaUri));
             }
         }
+
+        public event EventHandler? PlayRequest;
 
         private bool _isPlaying;
         public bool IsPlaying
@@ -56,7 +60,7 @@ namespace Media_Player.ViewModel
         #endregion
 
         #region Methods
-        public Uri OpenMediaFile()
+        public Uri? OpenMediaFile()
         {
             // Configure open file dialog box
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -77,26 +81,44 @@ namespace Media_Player.ViewModel
             }
             return null;
         }
+
+        private void playMedia()
+        {
+            if (PlayRequest != null)
+            {
+                PlayRequest(this, EventArgs.Empty);
+            }
+        }
+
         #endregion
 
         #region Commands
-        private ICommand openFile = null;
-        public ICommand OpenFile
+        private ICommand? openFile = null;
+        public ICommand? OpenFile
         {
             get
             {
                 if (openFile == null)
                 {
                     openFile = new RelayCommand(
-                        arg =>
+                        execute =>
                         {
                             MediaUri = OpenMediaFile();
                         },
-                        arg => true);
+                        canExecute => true);
                 }
                 return openFile;
             }
         }
+
+        public ICommand PlayRequested
+        {
+            get
+            {
+                return new RelayCommand(execute => playMedia(), canExecute => (MediaUri != null));
+            }
+        }
+
         #endregion
     }
 }
