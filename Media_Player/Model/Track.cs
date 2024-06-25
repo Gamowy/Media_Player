@@ -8,19 +8,18 @@ namespace Media_Player.Model
 {
     public class Track
     {
-        int Id {  get; set; }
-        string Name { get; set; }
-        string? Artist { get; set; }
-        string? Album { get; set; }
-        string? Genre { get; set; }
-        int? ReleaseYear { get; set; }
-        int? Duration { get; set; }
-        Uri FilePath { get; set; }
+        public int? Id { get; set; }
+        public string TrackName { get; set; }
+        public string? Artist { get; set; }
+        public string? Album { get; set; }
+        public string? Genre { get; set; }
+        public int? ReleaseYear { get; set; }
+        public string FilePath { get; set; }
 
-        public Track(int id, string name, Uri filepath)
+        public Track(int? id, string trackname, string filepath)
         {
             Id = id;
-            Name = name;
+            TrackName = trackname;
             FilePath = filepath;
         }
     }

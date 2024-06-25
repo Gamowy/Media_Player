@@ -7,8 +7,8 @@
         xmlns:local="clr-namespace:Media_Player"
         mc:Ignorable="d"
         MinHeight="720"
-        MinWidth="1200"
-        Title="Odtwarzacz multimedialny" Height="720" Width="1200"
+        MinWidth="1080"
+        Title="Odtwarzacz multimedialny" Height="720" Width="1080"
         Background="Gray"
         >
     <Window.DataContext>
@@ -27,6 +27,7 @@
             <RowDefinition Height="0.05*"/>
             <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="0.2*"/>
@@ -41,10 +42,13 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding MediaElementVM.OpenFile}" Grid.Column="0">Otwórz wideo</Button>
-            <Button Grid.Column="2">Stwórz playliste</Button>
-            <Button Grid.Column="4">Otwórz playliste</Button>
+            <Button Grid.Column="0" Command="{Binding OpenVideoFile}">Otwórz wideo</Button>
+            <Button Grid.Column="2" Command="{Binding CreatePlaylist}">Stwórz playliste</Button>
+            <Button Grid.Column="4" Command="{Binding OpenPlaylist}">Otwórz playliste</Button>
+            <Button Grid.Column="6" Command="{Binding SavePlaylist}">Zapisz playliste</Button>
         </Grid>
         <Grid Grid.Column="4" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -52,31 +56,24 @@
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0">Dodaj utwór</Button>
-            <Button Grid.Column="3">Usuń utwór</Button>
+            <Button Grid.Column="0" Command="{Binding AddNewTrack}">Dodaj utwór</Button>
+            <Button Grid.Column="3" Command="{Binding DeleteTrack}">Usuń utwór</Button>
         </Grid>
-
-        <Grid Grid.Column="1" Grid.Row="3" Grid.RowSpan="2" Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-            <Label Grid.Row="0" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Black">
-            <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" LoadedBehavior="Manual"/>
+        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="4" Content="{Binding PlaylistName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
+                <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" LoadedBehavior="Manual"/>
         </Border>
-        </Grid>
-        <DataGrid x:Name="PlaylistDataGrid" Grid.Column="4" Grid.Row="3" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
+            <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
             <DataGrid.Columns> 
-                <DataGridTextColumn Header="Utwór"/>
-                <DataGridTextColumn Header="Artysta" />
-                <DataGridTextColumn Header="Album"/>
-                <DataGridTextColumn Header="Gatunek"/>
-                <DataGridTextColumn Header="Rok Wydania" />
-                <DataGridTextColumn Header="Czas trwania"/>
+                <DataGridTextColumn Header="Utwór" Binding="{Binding TrackName}"/>
+                <DataGridTextColumn Header="Artysta" Binding="{Binding Artist}"/>
+                <DataGridTextColumn Header="Album" Binding="{Binding Album}"/>
+                <DataGridTextColumn Header="Gatunek" Binding="{Binding Genre}"/>
+                <DataGridTextColumn Header="Rok Wydania" Binding="{Binding ReleaseYear}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="2" Grid.RowSpan="2">
+        <Grid Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.45*"/>
                 <ColumnDefinition Width="0.05*"/>
@@ -113,7 +110,7 @@
             <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}"/>
             </Grid>
         </Grid>
-        <Grid Grid.Column="4" Grid.Row="5" Grid.RowSpan="2">
+        <Grid Grid.Column="4" Grid.Row="6" Grid.RowSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="1*"/>
