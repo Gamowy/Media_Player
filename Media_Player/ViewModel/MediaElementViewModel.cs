@@ -24,7 +24,7 @@ namespace Media_Player.ViewModel
         }
 
         #region Properties
-        private String _mediaName;
+        private String? _mediaName;
         public String? MediaName
         {
             get
@@ -39,7 +39,7 @@ namespace Media_Player.ViewModel
                 }
                 else
                 {
-                    _mediaName = "Odtwarzane: ---";
+                    _mediaName = "Aktualnie nic nie odtwarzasz";
                 }
                 onPropertyChanged(nameof(MediaName));
             }
@@ -57,7 +57,7 @@ namespace Media_Player.ViewModel
                 if (value != null)
                 {
                     string filename = System.IO.Path.GetFileName(value.LocalPath);
-                    MediaName = "Odtwarzane: " + filename;
+                    MediaName = filename;
                 }
                 else
                 {
@@ -80,14 +80,20 @@ namespace Media_Player.ViewModel
             onPropertyChanged(nameof(IsPlaying));}
         }
 
+        public event EventHandler? VolumeButtonUpdate;
+
+        private double _previousVolumeLevel;
+        
         private double _volumeLevel;
         public double VolumeLevel
         {
             get { return _volumeLevel; }
             set
             {
+                _previousVolumeLevel =  _volumeLevel;
                 _volumeLevel = value;
                 onPropertyChanged(nameof(VolumeLevel));
+                VolumeButtonUpdate(this, EventArgs.Empty);
             }
         }
         #endregion
@@ -99,7 +105,7 @@ namespace Media_Player.ViewModel
             var dialog = new Microsoft.Win32.OpenFileDialog();
             //dialog.FileName = "Media"; // Default file name
             //dialog.DefaultExt = "*.*"; // Default file extension
-            dialog.Filter = "avi (*.avi)|*.avi|MP4 (*.mp4)|*.mp4|All files (*.*)|*.*"; // Filter files by extension
+            dialog.Filter = "Media (*.avi, *.mp4)|*.avi;*.mp4|All files (*.*)|*.*"; // Filter files by extension
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
             // Process open file dialog box results
@@ -120,6 +126,18 @@ namespace Media_Player.ViewModel
             if (PlayRequest != null)
             {
                 PlayRequest(this, EventArgs.Empty);
+            }
+        }
+
+        private void muteAudio()
+        {
+            if (VolumeLevel == 0)
+            {
+                VolumeLevel = _previousVolumeLevel;
+            }
+            else
+            {
+                VolumeLevel = 0;
             }
         }
 
@@ -149,6 +167,14 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => playMedia(), canExecute => (MediaUri != null));
+            }
+        }
+
+        public ICommand MuteAudio
+        {
+            get
+            {
+                return new RelayCommand(execute => muteAudio(), canExecute => true);
             }
         }
 

@@ -10,11 +10,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\mute.png" />
+    <None Remove="Resources\next.png" />
+    <None Remove="Resources\pause.png" />
+    <None Remove="Resources\play.png" />
+    <None Remove="Resources\previous.png" />
+    <None Remove="Resources\volume.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="windowicon.ico" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\mute.png" />
+    <Resource Include="Resources\next.png" />
+    <Resource Include="Resources\pause.png" />
+    <Resource Include="Resources\play.png" />
+    <Resource Include="Resources\previous.png" />
+    <Resource Include="Resources\volume.png" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Media_Player.Model
 {
-    public class Song
+    public class Track
     {
         int Id {  get; set; }
         string Name { get; set; }
@@ -15,9 +15,9 @@ namespace Media_Player.Model
         string? Genre { get; set; }
         int? ReleaseYear { get; set; }
         int? Duration { get; set; }
-        string FilePath { get; set; }
+        Uri FilePath { get; set; }
 
-        public Song(int id, string name, string filepath)
+        public Track(int id, string name, Uri filepath)
         {
             Id = id;
             Name = name;

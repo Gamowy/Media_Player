@@ -32,6 +32,7 @@ namespace Media_Player
             timer.Start();
 
             MediaPlayerVM.MediaElementVM.PlayRequest += (sender, e) => Play_Request();
+            MediaPlayerVM.MediaElementVM.VolumeButtonUpdate += (sender, e) => Change_Volume_Button_Image();
         }
 
         private void timer_Tick(object? sender, EventArgs e)
@@ -69,11 +70,25 @@ namespace Media_Player
             {
                 MediaElement.Pause();
                 MediaPlayerVM.MediaElementVM.IsPlaying = false;
+                PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/play.png", UriKind.Relative));
             }
             else
             {
                 MediaElement.Play();
                 MediaPlayerVM.MediaElementVM.IsPlaying = true;
+                PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/pause.png", UriKind.Relative));
+            }
+        }
+
+        private void Change_Volume_Button_Image()
+        {
+            if (VolumeSlider.Value == 0)
+            {
+                VolumeButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/mute.png", UriKind.Relative));
+            }
+            else
+            {
+                VolumeButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/volume.png", UriKind.Relative));
             }
         }
     }
