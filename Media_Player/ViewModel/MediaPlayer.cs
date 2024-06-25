@@ -195,6 +195,17 @@ namespace Media_Player.ViewModel
             addTrackWindow.ShowDialog();
             Tracks = playlist?.Tracks;
         }
+
+        private void deleteSelectedTrack()
+        {
+            var result = MessageBox.Show("Czy napewno chcesz usunąć utwór?", "Usuń utwór", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                playlist!.removeTrack(SelectedTrack!.Id);
+                SelectedTrack = null;
+            }
+
+        }
         #endregion
 
         #region Commands
@@ -235,6 +246,14 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => openAddTrackWindow(), canExecute => (playlist != null));
+            }
+        }
+
+        public ICommand DeleteTrack
+        {
+            get
+            {
+                return new RelayCommand(execute => deleteSelectedTrack(), canExecute => (playlist != null && SelectedTrack != null));
             }
         }
         #endregion

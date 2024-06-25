@@ -15,10 +15,10 @@ namespace Media_Player.Model
     public class Playlist 
     {
         #region SQL COMMANDS
-        private const string CREATE_TRACKS_TB = "CREATE TABLE tracks (id int primary key, track_name text not null, artist text, album text, genre text, release_year int, duration real, file_path text)";
+        private const string CREATE_TRACKS_TB = "CREATE TABLE tracks (id int primary key, track_name text not null, artist text, album text, genre text, release_year int, file_path text)";
         private const string SELECT_TRACKS = "SELECT * from tracks";
         private const string DELETE_TRACKS = "DELETE FROM tracks";
-        private const string INSERT_TRACKS = "INSERT INTO tracks VALUES (@track_id, @track_name, @artist, @album, @genre, @release_year, @duration, @file_path)";
+        private const string INSERT_TRACKS = "INSERT INTO tracks VALUES (@track_id, @track_name, @artist, @album, @genre, @release_year, @file_path)";
         #endregion
 
         public string Name { get; private set; }
@@ -69,12 +69,11 @@ namespace Media_Player.Model
                 while (reader.Read())
                 {
                     int id = (int)reader["id"];
-                    string trackName = reader["name"].ToString()!;
+                    string trackName = reader["track_name"].ToString()!;
                     string? artist = reader["artist"].ToString();
                     string? album = reader["album"].ToString();
                     string? genre = reader["genre"].ToString();
                     int? releaseYear = (int)reader["release_year"];
-                    double? duration = (double)reader["duration"];
                     string filePath = reader["file_path"].ToString()!;
 
                     if (id > LastTrackId)
@@ -82,8 +81,12 @@ namespace Media_Player.Model
                         LastTrackId = id;
                     }
 
-                    Uri fileUri = new Uri(filePath, UriKind.Absolute);
-                    Track track = new Track(id, trackName, fileUri);
+                    Track track = new Track(id, trackName, filePath);
+                    track.TrackName = trackName;
+                    track.Artist = artist;
+                    track.Album = album;
+                    track.Genre = genre;
+                    track.ReleaseYear = releaseYear;
                     Tracks.Add(track);
                 }
                 connection.Clone();
@@ -100,13 +103,16 @@ namespace Media_Player.Model
             Tracks.Add(track);
         }
 
-        public void removeTrack(int removeTrackId)
+        public void removeTrack(int? removeTrackId)
         {
-            foreach (Track track in Tracks)
+            if (removeTrackId != null)
             {
-                if (track.Id == removeTrackId)
+                foreach (Track track in Tracks.ToList())
                 {
-                    Tracks.Remove(track);
+                    if (track.Id == removeTrackId)
+                    {
+                        Tracks.Remove(track);
+                    }
                 }
             }
         }
@@ -130,8 +136,7 @@ namespace Media_Player.Model
                     insertNew.Parameters.AddWithValue("album", track.Album);
                     insertNew.Parameters.AddWithValue("genre", track.Genre);
                     insertNew.Parameters.AddWithValue("release_year", track.ReleaseYear);
-                    insertNew.Parameters.AddWithValue("duration", track.Duration);
-                    insertNew.Parameters.AddWithValue("file_path", track.FilePath.AbsolutePath);
+                    insertNew.Parameters.AddWithValue("file_path", track.FilePath);
                     insertNew.ExecuteNonQuery();
                 }
                 connection.Clone();

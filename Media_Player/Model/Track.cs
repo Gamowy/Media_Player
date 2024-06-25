@@ -14,10 +14,9 @@ namespace Media_Player.Model
         public string? Album { get; set; }
         public string? Genre { get; set; }
         public int? ReleaseYear { get; set; }
-        public double? Duration { get; set; }
-        public Uri FilePath { get; set; }
+        public string FilePath { get; set; }
 
-        public Track(int? id, string trackname, Uri filepath)
+        public Track(int? id, string trackname, string filepath)
         {
             Id = id;
             TrackName = trackname;

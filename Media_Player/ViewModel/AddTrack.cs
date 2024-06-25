@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace Media_Player.ViewModel
 {
     using BaseClass;
     using Media_Player.Model;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics.Tracing;
-    using System.Windows;
-    using System.Windows.Input;
 
     public class AddTrack : ViewModelBase
     {
@@ -119,6 +117,22 @@ namespace Media_Player.ViewModel
                     if (filePath != string.Empty)
                     {
                         AudioFilePath = filePath;
+                        var tfile = TagLib.File.Create(AudioFilePath);
+
+                        TrackName = tfile.Tag.Title;
+                        if(tfile.Tag.Performers.Count() > 0)
+                        {
+                            Artist = tfile.Tag.Performers[0];
+                        }
+                        Album = tfile.Tag.Album;
+                        if (tfile.Tag.Genres.Count() > 0)
+                        {
+                            Genre = tfile.Tag.Genres[0];
+                        }
+                        if (tfile.Tag.Year != 0)
+                        {
+                            ReleaseYear = tfile.Tag.Year.ToString();
+                        }
                     }
                 }
             }
@@ -148,9 +162,8 @@ namespace Media_Player.ViewModel
                 {
                     year = Int32.Parse(ReleaseYear);
                 }
-                Uri fileUri = new System.Uri(AudioFilePath!, UriKind.Absolute);
                 Playlist? playlist = ViewModelShare.playlistShare;
-                Track newTrack = new Track(null, TrackName!, fileUri);
+                Track newTrack = new Track(null, TrackName!, AudioFilePath!);
                 newTrack.Artist = artist;
                 newTrack.Album = album;
                 newTrack.Genre = genre;
