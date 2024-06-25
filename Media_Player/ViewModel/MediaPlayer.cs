@@ -12,5 +12,11 @@ namespace Media_Player.ViewModel
     public class MediaPlayer : ViewModelBase
     {
         public Playlist? playlist;
+        public MediaElementViewModel MediaElementVM { get; set; }
+
+        public MediaPlayer()
+        {
+            MediaElementVM = new MediaElementViewModel();
+        }
     }
 }
