@@ -61,7 +61,7 @@
                 <RowDefinition Height="0.1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-        <Label Grid.Row="0" Content="Teraz odtwarzane:" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Label Grid.Row="0" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <Border Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="1" Background="White">
             <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" LoadedBehavior="Manual"/>
         </Border>

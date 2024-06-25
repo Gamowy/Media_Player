@@ -10,6 +10,7 @@ namespace Media_Player.ViewModel
     using BaseClass;
     using Media_Player.Model;
     using System.Diagnostics;
+    using System.Diagnostics.Tracing;
     using System.Windows.Controls;
     using System.Windows.Input;
 
@@ -19,9 +20,32 @@ namespace Media_Player.ViewModel
         {
             _isPlaying = false;
             _volumeLevel = 0.5;
+            MediaName = null;
         }
 
         #region Properties
+        private String _mediaName;
+        public String? MediaName
+        {
+            get
+            {
+                return _mediaName;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _mediaName = value;
+                }
+                else
+                {
+                    _mediaName = "Odtwarzane: ---";
+                }
+                onPropertyChanged(nameof(MediaName));
+            }
+        }
+
+
         private Uri? _mediaUri;
         public Uri? MediaUri
         {
@@ -30,6 +54,15 @@ namespace Media_Player.ViewModel
             set
             {
                 _mediaUri = value;
+                if (value != null)
+                {
+                    string filename = System.IO.Path.GetFileName(value.LocalPath);
+                    MediaName = "Odtwarzane: " + filename;
+                }
+                else
+                {
+                    MediaName = null;
+                }
                 IsPlaying = false;
                 playMedia();
                 onPropertyChanged(nameof(MediaUri));
@@ -60,7 +93,7 @@ namespace Media_Player.ViewModel
         #endregion
 
         #region Methods
-        public Uri? OpenMediaFile()
+        public Uri? OpenVideoFile()
         {
             // Configure open file dialog box
             var dialog = new Microsoft.Win32.OpenFileDialog();
@@ -103,7 +136,7 @@ namespace Media_Player.ViewModel
                     openFile = new RelayCommand(
                         execute =>
                         {
-                            MediaUri = OpenMediaFile();
+                            MediaUri = OpenVideoFile();
                         },
                         canExecute => true);
                 }
