@@ -190,8 +190,10 @@ namespace Media_Player.ViewModel
         }
         private void openAddTrackWindow()
         {
+            ViewModelShare.playlistShare = playlist;
             addTrackWindow = new AddTrackWindow();
-            addTrackWindow.Show();
+            addTrackWindow.ShowDialog();
+            Tracks = playlist?.Tracks;
         }
         #endregion
 

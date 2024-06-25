@@ -8,7 +8,7 @@ namespace Media_Player.Model
 {
     public class Track
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string TrackName { get; set; }
         public string? Artist { get; set; }
         public string? Album { get; set; }
@@ -17,7 +17,7 @@ namespace Media_Player.Model
         public double? Duration { get; set; }
         public Uri FilePath { get; set; }
 
-        public Track(int id, string trackname, Uri filepath)
+        public Track(int? id, string trackname, Uri filepath)
         {
             Id = id;
             TrackName = trackname;

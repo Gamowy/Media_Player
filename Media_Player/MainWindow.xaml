@@ -64,14 +64,14 @@
         <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
                 <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" LoadedBehavior="Manual"/>
         </Border>
-            <DataGrid x:Name="PlaylistDataGrid" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
+            <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
             <DataGrid.Columns> 
-                <DataGridTextColumn Header="Utwór"/>
-                <DataGridTextColumn Header="Artysta" />
-                <DataGridTextColumn Header="Album"/>
-                <DataGridTextColumn Header="Gatunek"/>
-                <DataGridTextColumn Header="Rok Wydania" />
-                <DataGridTextColumn Header="Czas trwania"/>
+                <DataGridTextColumn Header="Utwór" Binding="{Binding TrackName}"/>
+                <DataGridTextColumn Header="Artysta" Binding="{Binding Artist}"/>
+                <DataGridTextColumn Header="Album" Binding="{Binding Album}"/>
+                <DataGridTextColumn Header="Gatunek" Binding="{Binding Genre}"/>
+                <DataGridTextColumn Header="Rok Wydania" Binding="{Binding ReleaseYear}"/>
+                <DataGridTextColumn Header="Czas trwania" Binding="{Binding Duration}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Column="1" Grid.Row="6" Grid.ColumnSpan="2" Grid.RowSpan="2">
