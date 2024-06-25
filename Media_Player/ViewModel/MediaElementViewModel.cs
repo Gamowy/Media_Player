@@ -10,31 +10,49 @@ namespace Media_Player.ViewModel
     using BaseClass;
     using Media_Player.Model;
     using System.Diagnostics;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     public class MediaElementViewModel:ViewModelBase
     {
-        MediaControl MediaControl;
+        public Media Media;
         public MediaElementViewModel()
         {
-            MediaControl=new MediaControl();
+            _isPlaying = false;
+            _volumeLevel = 0.5;
+            //_mediaUri = null;
         }
 
         #region Properties
+        private Uri _mediaUri;
         public Uri MediaUri {
             get
-            { return MediaControl.MediaUri; }
-            private set
-            {  MediaControl.MediaUri = value;
-                onPropertyChanged(nameof(MediaControl.MediaUri));
+            { return _mediaUri; }
+            set
+            {
+                _mediaUri = value;
+                onPropertyChanged(nameof(MediaUri));
             }
             }
 
+        private bool _isPlaying;
         public bool IsPlaying
         {
-            get { return MediaControl.IsPlaying; }
-            set { MediaControl.IsPlaying = value;
-            onPropertyChanged(nameof(MediaControl.IsPlaying));}
+            get { return _isPlaying; }
+            set {
+                _isPlaying = value;
+            onPropertyChanged(nameof(IsPlaying));}
+        }
+
+        private double _volumeLevel;
+        public double VolumeLevel
+        {
+            get { return _volumeLevel; }
+            set
+            {
+                _volumeLevel = value;
+                onPropertyChanged(nameof(VolumeLevel));
+            }
         }
         #endregion
 
@@ -43,9 +61,9 @@ namespace Media_Player.ViewModel
         {
             // Configure open file dialog box
             var dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.FileName = "Media"; // Default file name
-                                       //dialog.DefaultExt = ".txt"; // Default file extension
-                                       // dialog.Filter = "Text documents (.txt)|*.txt"; // Filter files by extension
+            //dialog.FileName = "Media"; // Default file name
+            //dialog.DefaultExt = "*.*"; // Default file extension
+            dialog.Filter = "MP3 (.mp3)|*.mp3|MP4 (.mp4)|*.mp4|wav (.wav)|*.wav|All files (*.*)|*.*"; // Filter files by extension
 
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
@@ -55,8 +73,8 @@ namespace Media_Player.ViewModel
             {
                 // Open document
                 string filename = dialog.FileName;
-                Trace.WriteLine(filename);
                 Uri uri = new Uri(filename);
+                //Media = new Media(filename);
                 Trace.WriteLine(uri.ToString());
                 return uri;
             }
@@ -76,6 +94,7 @@ namespace Media_Player.ViewModel
                         arg =>
                         {
                             MediaUri = OpenMediaFile();
+                            Trace.WriteLine(MediaUri.ToString());
                         },
                         arg => true);
                 }
