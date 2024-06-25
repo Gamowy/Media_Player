@@ -23,12 +23,14 @@ namespace Media_Player.Model
 
         public string Name { get; private set; }
         public string Path { get; private set; }
+        private int lastTrackId;
         public ObservableCollection<Track> Tracks { get; private set; }
 
         public Playlist(string playlistname, string playlistPath)
         {
             Name = playlistname;
             Path = playlistPath;
+            lastTrackId = -1;
             Tracks = new ObservableCollection<Track>();
         }
 
@@ -75,7 +77,11 @@ namespace Media_Player.Model
                     double? duration = (double)reader["duration"];
                     string filePath = reader["file_path"].ToString()!;
 
-     
+                    if (id > lastTrackId)
+                    {
+                        lastTrackId = id;
+                    }
+
                     Uri fileUri = new Uri(filePath, UriKind.Absolute);
                     Track track = new Track(id, trackName, fileUri);
                     Tracks.Add(track);
@@ -91,6 +97,7 @@ namespace Media_Player.Model
         public void addTrack(Track track)
         {
             Tracks.Add(track);
+            lastTrackId = track.Id;
         }
 
         public void removeTrack(int removeTrackId)
