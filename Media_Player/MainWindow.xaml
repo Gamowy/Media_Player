@@ -42,10 +42,13 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Command="{Binding OpenVideoFile}">Otwórz wideo</Button>
             <Button Grid.Column="2" Command="{Binding CreatePlaylist}">Stwórz playliste</Button>
-            <Button Grid.Column="4">Otwórz playliste</Button>
+            <Button Grid.Column="4" Command="{Binding OpenPlaylist}">Otwórz playliste</Button>
+            <Button Grid.Column="6" Command="{Binding SavePlaylist}">Zapisz playliste</Button>
         </Grid>
         <Grid Grid.Column="4" Grid.Row="1">
             <Grid.ColumnDefinitions>

@@ -41,9 +41,15 @@ namespace Media_Player.ViewModel
                 switch (value) {
                     case PlayMode.None:
                         MediaElementVM.MediaUri = null;
+                        playlist = null;
+                        Tracks = null;
+                        SelectedTrack = null;
                         PlaylistName = "Playlista";
                         break;
                     case PlayMode.Video:
+                        playlist = null;
+                        Tracks = null;
+                        SelectedTrack = null;
                         PlaylistName = "Playlista";
                         break;
                     case PlayMode.Playlist:
@@ -104,6 +110,20 @@ namespace Media_Player.ViewModel
         #endregion
 
         #region Methods
+        private void openVideo()
+        {
+            try
+            {
+                MediaElementVM.OpenVideoFile();
+                MediaPlayMode = PlayMode.Video;
+            }
+            catch (Exception ex)
+            {
+                MediaPlayMode = PlayMode.None;
+                MessageBox.Show($"Błąd podczas otwierania wideo:\n{ex.Message}", "Błąd zapisu!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
         private void createPlaylistFile()
         {
             try
@@ -128,17 +148,41 @@ namespace Media_Player.ViewModel
             }
         }
 
-        private void openVideo()
+        private void openPlaylistFile()
         {
             try
             {
-                MediaElementVM.OpenVideoFile();
-                MediaPlayMode = PlayMode.Video;
+                Playlist? newPlaylist = PlaylistFileDialog.openFile();
+                if (newPlaylist != null)
+                {
+                    playlist = newPlaylist;
+                    playlist.loadFromFile();
+                    Tracks = playlist.Tracks;
+                    MediaPlayMode = PlayMode.Playlist;
+                    MessageBox.Show("Pomyślnie otworzno playliste.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
             catch (Exception ex)
             {
+                playlist = null;
+                PlaylistName = null;
+                Tracks = null;
                 MediaPlayMode = PlayMode.None;
-                MessageBox.Show($"Błąd podczas otwierania wideo:\n{ex.Message}", "Błąd zapisu!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Błąd podczas otwierania playlisty:\n{ex.Message}", "Błąd odczytu!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void savePlaylist()
+        {
+            try
+            {
+                playlist!.save();
+                MessageBox.Show("Pomyślnie zapisano playliste.", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Błąd podczas zapisywania playlisty:\n{ex.Message}", "Błąd zapisu!", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
         #endregion
@@ -157,6 +201,22 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => createPlaylistFile(), canExecute => true);
+            }
+        }
+
+        public ICommand OpenPlaylist
+        {
+            get
+            {
+                return new RelayCommand(execute => openPlaylistFile(), canExecute => true);
+            }
+        }
+
+        public ICommand SavePlaylist
+        {
+            get
+            {
+                return new RelayCommand(execute => savePlaylist(), canExecute => (playlist != null));
             }
         }
         #endregion
