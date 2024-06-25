@@ -15,17 +15,16 @@ namespace Media_Player.ViewModel
 
     public class MediaElementViewModel:ViewModelBase
     {
-        public Media Media;
         public MediaElementViewModel()
         {
             _isPlaying = false;
             _volumeLevel = 0.5;
-            //_mediaUri = null;
         }
 
         #region Properties
         private Uri _mediaUri;
-        public Uri MediaUri {
+        public Uri MediaUri
+        {
             get
             { return _mediaUri; }
             set
@@ -33,7 +32,7 @@ namespace Media_Player.ViewModel
                 _mediaUri = value;
                 onPropertyChanged(nameof(MediaUri));
             }
-            }
+        }
 
         private bool _isPlaying;
         public bool IsPlaying
@@ -63,11 +62,9 @@ namespace Media_Player.ViewModel
             var dialog = new Microsoft.Win32.OpenFileDialog();
             //dialog.FileName = "Media"; // Default file name
             //dialog.DefaultExt = "*.*"; // Default file extension
-            dialog.Filter = "MP3 (.mp3)|*.mp3|MP4 (.mp4)|*.mp4|wav (.wav)|*.wav|All files (*.*)|*.*"; // Filter files by extension
-
+            dialog.Filter = "avi (*.avi)|*.avi|MP4 (*.mp4)|*.mp4|All files (*.*)|*.*"; // Filter files by extension
             // Show open file dialog box
             bool? result = dialog.ShowDialog();
-
             // Process open file dialog box results
             if (result == true)
             {
@@ -94,7 +91,6 @@ namespace Media_Player.ViewModel
                         arg =>
                         {
                             MediaUri = OpenMediaFile();
-                            Trace.WriteLine(MediaUri.ToString());
                         },
                         arg => true);
                 }

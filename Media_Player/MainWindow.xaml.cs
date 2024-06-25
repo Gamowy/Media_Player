@@ -21,7 +21,7 @@ namespace Media_Player
     public partial class MainWindow : Window
     {
         private bool sliderDragged = false;
-        private string durationSting = "00:00";
+        private string durationString = "00:00";
         public MainWindow()
         {
             InitializeComponent();
@@ -38,7 +38,8 @@ namespace Media_Player
             {
                 ProgressSlider.Maximum = MediaElement.NaturalDuration.TimeSpan.TotalSeconds;
                 ProgressSlider.Value = MediaElement.Position.TotalSeconds;
-                durationSting = TimeSpan.FromSeconds(MediaElement.NaturalDuration.TimeSpan.TotalSeconds).ToString(@"mm\:ss");
+                TimeSpan duration = TimeSpan.FromSeconds(MediaElement.NaturalDuration.TimeSpan.TotalSeconds);
+                durationString = $"{(int)duration.TotalMinutes}:{duration.Seconds:00}";
             }
         }
 
@@ -55,7 +56,8 @@ namespace Media_Player
 
         private void ProgressSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ProgressLabel.Content = TimeSpan.FromSeconds(ProgressSlider.Value).ToString(@"mm\:ss")+"/"+durationSting;
+            TimeSpan timeElapsed=TimeSpan.FromSeconds(ProgressSlider.Value);
+            ProgressLabel.Content =$"{ (int)timeElapsed.TotalMinutes}:{timeElapsed.Seconds:00}"+"/"+durationString;
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)
@@ -72,5 +74,6 @@ namespace Media_Player
                 MediaPlayerVM.MediaElementVM.IsPlaying = true;
             }
         }
+
     }
 }
