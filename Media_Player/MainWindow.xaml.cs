@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Media_Player.ViewModel;
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Windows;
@@ -43,6 +44,17 @@ namespace Media_Player
                 ProgressSlider.Value = MediaElement.Position.TotalSeconds;
                 TimeSpan duration = TimeSpan.FromSeconds(MediaElement.NaturalDuration.TimeSpan.TotalSeconds);
                 durationString = $"{(int)duration.TotalMinutes}:{duration.Seconds:00}";
+                if (ProgressSlider.Value == ProgressSlider.Maximum)
+                {
+                    PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/play.png", UriKind.Relative));
+                    MediaElement.Pause();
+                    MediaPlayerVM.MediaElementVM.IsPlaying = false;
+                }
+            }
+            else if (MediaElement.Source == null)
+            {
+                ProgressSlider.Value = 0;
+                ProgressLabel.Content = "00:00";
             }
         }
 
@@ -65,7 +77,6 @@ namespace Media_Player
 
         private void Play_Request()
         {
-            Trace.WriteLine("play");
             if (MediaPlayerVM.MediaElementVM.IsPlaying)
             {
                 MediaElement.Pause();
@@ -74,6 +85,10 @@ namespace Media_Player
             }
             else
             {
+                if(ProgressSlider.Value == ProgressSlider.Maximum)
+                {
+                    MediaElement.Position = TimeSpan.FromSeconds(0);
+                }
                 MediaElement.Play();
                 MediaPlayerVM.MediaElementVM.IsPlaying = true;
                 PlayButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/pause.png", UriKind.Relative));
