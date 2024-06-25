@@ -93,32 +93,46 @@ namespace Media_Player.ViewModel
                 _previousVolumeLevel =  _volumeLevel;
                 _volumeLevel = value;
                 onPropertyChanged(nameof(VolumeLevel));
-                VolumeButtonUpdate(this, EventArgs.Empty);
+                if (VolumeButtonUpdate != null)
+                {
+                    VolumeButtonUpdate(this, EventArgs.Empty);
+                }
             }
         }
         #endregion
 
         #region Methods
-        public Uri? OpenVideoFile()
+        public void OpenVideoFile()
         {
-            // Configure open file dialog box
-            var dialog = new Microsoft.Win32.OpenFileDialog();
-            //dialog.FileName = "Media"; // Default file name
-            //dialog.DefaultExt = "*.*"; // Default file extension
-            dialog.Filter = "Media (*.avi, *.mp4)|*.avi;*.mp4|All files (*.*)|*.*"; // Filter files by extension
-            // Show open file dialog box
-            bool? result = dialog.ShowDialog();
-            // Process open file dialog box results
-            if (result == true)
+            try
             {
-                // Open document
-                string filename = dialog.FileName;
-                Uri uri = new Uri(filename);
-                //Media = new Media(filename);
-                Trace.WriteLine(uri.ToString());
-                return uri;
+                // Configure open file dialog box
+                var dialog = new Microsoft.Win32.OpenFileDialog();
+                //dialog.FileName = "Media"; // Default file name
+                //dialog.DefaultExt = "*.*"; // Default file extension
+                dialog.Filter = "Media (*.avi, *.mp4)|*.avi;*.mp4|All files (*.*)|*.*"; // Filter files by extension
+                                                                                        // Show open file dialog box
+                bool? result = dialog.ShowDialog();
+                // Process open file dialog box results
+                if (result == true)
+                {
+                    // Open document
+                    string filename = dialog.FileName;
+                    Uri uri = new Uri(filename);
+                    //Media = new Media(filename);
+                    Trace.WriteLine(uri.ToString());
+                    MediaUri = uri;
+                }
+                else
+                {
+                    MediaUri = null;
+                }
             }
-            return null;
+            catch (Exception ex)
+            {
+                MediaUri = null;
+                throw new Exception(ex.Message);
+            }
         }
 
         private void playMedia()
@@ -144,24 +158,6 @@ namespace Media_Player.ViewModel
         #endregion
 
         #region Commands
-        private ICommand? openFile = null;
-        public ICommand? OpenFile
-        {
-            get
-            {
-                if (openFile == null)
-                {
-                    openFile = new RelayCommand(
-                        execute =>
-                        {
-                            MediaUri = OpenVideoFile();
-                        },
-                        canExecute => true);
-                }
-                return openFile;
-            }
-        }
-
         public ICommand PlayRequested
         {
             get

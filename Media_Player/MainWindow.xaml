@@ -42,8 +42,8 @@
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Button Command="{Binding MediaElementVM.OpenFile}" Grid.Column="0">Otwórz wideo</Button>
-            <Button Grid.Column="2">Stwórz playliste</Button>
+            <Button Grid.Column="0" Command="{Binding OpenVideoFile}">Otwórz wideo</Button>
+            <Button Grid.Column="2" Command="{Binding CreatePlaylist}">Stwórz playliste</Button>
             <Button Grid.Column="4">Otwórz playliste</Button>
         </Grid>
         <Grid Grid.Column="4" Grid.Row="1">
