@@ -195,7 +195,7 @@ namespace Media_Player.ViewModel
         {
             get
             {
-                return new RelayCommand(execute => addTrackToPlaylist(), canExecute => (TrackName != null && AudioFilePath != null));
+                return new RelayCommand(execute => addTrackToPlaylist(), canExecute => (TrackName != null && AudioFilePath != null && ReleaseYear!=null));
             }
         }
         #endregion
