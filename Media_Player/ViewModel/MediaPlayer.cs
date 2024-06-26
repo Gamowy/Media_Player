@@ -278,6 +278,31 @@ namespace Media_Player.ViewModel
                 goToNextTrack();    
             }
         }
+
+        public async void FetchAndDisplayLyricsForSelectedTrack()
+        {
+            if (SelectedTrack != null)
+            {
+                try
+                {
+                    var lyricsService = new LyricsService();
+                    var lyrics = await lyricsService.FetchLyricsAsync(SelectedTrack.Artist, SelectedTrack.TrackName);
+                    Application.Current.Dispatcher.Invoke(() =>
+                    {
+                        var lyricsWindow = new LyricsWindow(lyrics);
+                        lyricsWindow.Show();
+                    });
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error fetching lyrics: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a track first.", "No Track Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
         #endregion
 
         #region Commands

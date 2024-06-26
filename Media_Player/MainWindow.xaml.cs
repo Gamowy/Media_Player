@@ -128,5 +128,11 @@ namespace Media_Player
             MediaElement.Position = TimeSpan.FromSeconds(0);
             ProgressSlider.Value = MediaElement.Position.TotalSeconds;
         }
+
+        private void ShowLyricsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var viewModel = DataContext as Media_Player.ViewModel.MediaPlayer;
+            viewModel.FetchAndDisplayLyricsForSelectedTrack();
+        }
     }
 }
