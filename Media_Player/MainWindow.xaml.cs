@@ -34,6 +34,8 @@ namespace Media_Player
 
             MediaPlayerVM.MediaElementVM.PlayRequest += (sender, e) => Play_Request();
             MediaPlayerVM.MediaElementVM.VolumeButtonUpdate += (sender, e) => Change_Volume_Button_Image();
+            MediaPlayerVM.GoToBeginningOfVideo += (sender, e) => GoToBeginningOfVideo();
+            MediaPlayerVM.GoToEndOfVideo += (sender, e) => GoToEndOfVideo();
         }
 
         private void timer_Tick(object? sender, EventArgs e)
@@ -105,6 +107,26 @@ namespace Media_Player
             {
                 VolumeButtonImg.Source = new BitmapImage(new Uri(@"/Media_Player;component/Resources/volume.png", UriKind.Relative));
             }
+        }
+
+        private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaPlayerVM.TrackEnded();
+        }
+
+        private void GoToEndOfVideo()
+        {
+            if (MediaElement.NaturalDuration.HasTimeSpan)
+            {
+                MediaElement.Position = MediaElement.NaturalDuration.TimeSpan;
+                ProgressSlider.Value = MediaElement.Position.TotalSeconds;
+            }
+        }
+
+        private void GoToBeginningOfVideo()
+        {
+            MediaElement.Position = TimeSpan.FromSeconds(0);
+            ProgressSlider.Value = MediaElement.Position.TotalSeconds;
         }
     }
 }
