@@ -12,9 +12,13 @@ namespace Media_Player.ViewModel
     using System.Configuration;
     using System.Diagnostics;
     using System.Diagnostics.Tracing;
+    using System.IO;
     using System.Windows;
     using System.Windows.Input;
     using System.Windows.Markup.Localizer;
+    using System.Windows.Media.Imaging;
+    using System.Xml;
+    using TagLib;
 
     public enum PlayMode { None, Video, Playlist};
 
@@ -26,11 +30,13 @@ namespace Media_Player.ViewModel
             addTrackWindow = null;
             playlist = null;
             MediaPlayMode = PlayMode.None;
+            defaultCover = new BitmapImage(new Uri(@"/Media_Player;component/Resources/defaultcover.png", UriKind.Relative));
         }
 
         #region Properties
 
         AddTrackWindow? addTrackWindow;
+        BitmapImage defaultCover;
 
         private PlayMode playmode;
         public PlayMode MediaPlayMode 
@@ -111,6 +117,15 @@ namespace Media_Player.ViewModel
                 {
                     MediaElementVM.MediaUri = new Uri(SelectedTrack.FilePath);
                     MediaElementVM.MediaName = SelectedTrack.TrackName;
+                    if(SelectedTrack.CoverImage != null) 
+                    {
+                        CoverImage = getCoverBitmap(SelectedTrack.CoverImage);
+                    }
+                    else
+                    {
+                        
+                        CoverImage = defaultCover;
+                    }
                 }
             }
         }
@@ -123,7 +138,17 @@ namespace Media_Player.ViewModel
             {
                 selectedIndex = value;
                 onPropertyChanged(nameof(SelectedIndex));
-                Trace.WriteLine(selectedIndex.ToString());
+            }
+        }
+
+        private BitmapImage? coverImage;
+        public BitmapImage? CoverImage
+        {
+            get { return coverImage; }
+            set
+            {
+                coverImage = value;
+                onPropertyChanged(nameof(CoverImage));
             }
         }
 
@@ -138,6 +163,7 @@ namespace Media_Player.ViewModel
             try
             {
                 MediaElementVM.OpenVideoFile();
+                CoverImage = null;
                 MediaPlayMode = PlayMode.Video;
             }
             catch (Exception ex)
@@ -277,6 +303,29 @@ namespace Media_Player.ViewModel
             {
                 goToNextTrack();    
             }
+        }
+
+        private BitmapImage getCoverBitmap(IPicture picture)
+        {
+            MemoryStream ms = new MemoryStream(picture.Data.Data);
+            ms.Seek(0, SeekOrigin.Begin);
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = ms;
+            bitmap.EndInit();
+
+            return bitmap;
+        }
+
+        private BitmapImage getCoverImage(IPicture picture)
+        {
+            MemoryStream ms = new MemoryStream(picture.Data.Data);
+            ms.Seek(0, SeekOrigin.Begin);
+            BitmapImage bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = ms;
+            bitmap.EndInit();
+            return bitmap;
         }
         #endregion
 

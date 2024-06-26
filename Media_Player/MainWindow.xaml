@@ -62,7 +62,10 @@
         <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Grid.Row="3" Grid.Column="4" Content="{Binding PlaylistName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
+            <Grid>
+                <Image Source="{Binding CoverImage}"/>
                 <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" MediaEnded="MediaElement_MediaEnded" LoadedBehavior="Manual"/>
+            </Grid>
         </Border>
             <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
             <DataGrid.Columns> 
