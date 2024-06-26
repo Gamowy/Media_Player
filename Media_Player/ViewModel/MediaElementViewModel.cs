@@ -99,6 +99,7 @@ namespace Media_Player.ViewModel
                 }
             }
         }
+
         #endregion
 
         #region Methods
@@ -119,7 +120,6 @@ namespace Media_Player.ViewModel
                     // Open document
                     string filename = dialog.FileName;
                     Uri uri = new Uri(filename);
-                    //Media = new Media(filename);
                     Trace.WriteLine(uri.ToString());
                     MediaUri = uri;
                 }
@@ -154,6 +154,7 @@ namespace Media_Player.ViewModel
                 VolumeLevel = 0;
             }
         }
+
 
         #endregion
 
