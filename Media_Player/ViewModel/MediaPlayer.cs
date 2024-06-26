@@ -30,11 +30,13 @@ namespace Media_Player.ViewModel
             addTrackWindow = null;
             playlist = null;
             MediaPlayMode = PlayMode.None;
+            defaultCover = new BitmapImage(new Uri(@"/Media_Player;component/Resources/defaultcover.png", UriKind.Relative));
         }
 
         #region Properties
 
         AddTrackWindow? addTrackWindow;
+        BitmapImage defaultCover;
 
         private PlayMode playmode;
         public PlayMode MediaPlayMode 
@@ -121,7 +123,8 @@ namespace Media_Player.ViewModel
                     }
                     else
                     {
-                        CoverImage = null;
+                        
+                        CoverImage = defaultCover;
                     }
                 }
             }
