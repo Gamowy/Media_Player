@@ -55,9 +55,12 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="0.1*"/>
                 <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.1*"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Command="{Binding AddNewTrack}">Dodaj utwór</Button>
-            <Button Grid.Column="3" Command="{Binding DeleteTrack}">Usuń utwór</Button>
+            <Button Grid.Column="2" Command="{Binding EditTrack}">Edytuj utwór</Button>
+            <Button Grid.Column="4" Command="{Binding DeleteTrack}">Usuń utwór</Button>
         </Grid>
         <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Label Grid.Row="3" Grid.Column="4" Content="{Binding PlaylistName}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -67,7 +70,7 @@
                 <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" MediaEnded="MediaElement_MediaEnded" LoadedBehavior="Manual"/>
             </Grid>
         </Border>
-            <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
+        <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="True">
             <DataGrid.Columns> 
                 <DataGridTextColumn Header="Utwór" Binding="{Binding TrackName}"/>
                 <DataGridTextColumn Header="Artysta" Binding="{Binding Artist}"/>

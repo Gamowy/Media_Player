@@ -237,9 +237,23 @@ namespace Media_Player.ViewModel
         private void openAddTrackWindow()
         {
             ViewModelShare.playlistShare = playlist;
-            addTrackWindow = new AddTrackWindow();
+            addTrackWindow = new AddTrackWindow("dodaj");
             addTrackWindow.ShowDialog();
             Tracks = playlist?.Tracks;
+            ViewModelShare.playlistShare = null;
+        }
+
+        private void openEditTrackWindow()
+        {
+            ViewModelShare.playlistShare = playlist;
+            ViewModelShare.selectedTrackShare = SelectedTrack;
+            addTrackWindow = new AddTrackWindow("edytuj");
+            addTrackWindow.ShowDialog();
+            SelectedTrack = ViewModelShare.selectedTrackShare;
+            Tracks = null;
+            Tracks = playlist?.Tracks;
+            ViewModelShare.playlistShare = null;
+            ViewModelShare.selectedTrackShare = null;
         }
 
         private void deleteSelectedTrack()
@@ -370,6 +384,14 @@ namespace Media_Player.ViewModel
             }
         }
 
+        public ICommand EditTrack
+        {
+            get
+            {
+                return new RelayCommand(execute => openEditTrackWindow(), canExecute => (playlist != null && SelectedTrack != null));
+            }
+        }
+
         public ICommand DeleteTrack
         {
             get
@@ -393,7 +415,6 @@ namespace Media_Player.ViewModel
                 return new RelayCommand(execute => goToPreviousTrack(), canExecute => (MediaPlayMode == PlayMode.Playlist || MediaPlayMode == PlayMode.Video));
             }
         }
-
         #endregion
     }
 }
