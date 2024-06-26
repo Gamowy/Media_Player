@@ -10,6 +10,7 @@ namespace Media_Player.ViewModel
 {
     using BaseClass;
     using Media_Player.Model;
+    using TagLib;
 
     public class AddTrack : ViewModelBase
     {
@@ -98,6 +99,20 @@ namespace Media_Player.ViewModel
                 onPropertyChanged(nameof(AudioFilePath));
             }
         }
+
+        private IPicture? coverImage;
+        public IPicture CoverImage
+        {
+            get
+            {
+                return coverImage;
+            }
+            set
+            {
+                coverImage = value;
+                onPropertyChanged(nameof(CoverImage));
+            }
+        }
         #endregion
 
         #region Methods
@@ -133,6 +148,10 @@ namespace Media_Player.ViewModel
                         {
                             ReleaseYear = tfile.Tag.Year.ToString();
                         }
+                        if(tfile.Tag.Pictures.Count() > 0)
+                        {
+                            CoverImage = tfile.Tag.Pictures[0];
+                        }
                     }
                 }
             }
@@ -151,6 +170,7 @@ namespace Media_Player.ViewModel
             Genre = null;
             ReleaseYear = null;
             AudioFilePath = null;
+            CoverImage = null;
         }
 
         private void addTrackToPlaylist()
@@ -168,6 +188,7 @@ namespace Media_Player.ViewModel
                 newTrack.Album = album;
                 newTrack.Genre = genre;
                 newTrack.ReleaseYear = year;
+                newTrack.CoverImage = coverImage;
                 playlist!.addTrack(newTrack);
 
                 clearForm();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TagLib;
 
 namespace Media_Player.Model
 {
@@ -15,6 +16,7 @@ namespace Media_Player.Model
         public string? Genre { get; set; }
         public int? ReleaseYear { get; set; }
         public string FilePath { get; set; }
+        public IPicture? CoverImage { get; set; }
 
         public Track(int? id, string trackname, string filepath)
         {
