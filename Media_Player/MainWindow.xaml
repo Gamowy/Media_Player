@@ -128,6 +128,6 @@
                 <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}" Background="#666666"/>
             </Grid>
         </Grid>
-        <Button Grid.Row="7" Grid.Column="4"  Command="{Binding ShowLyrics}">Tekst utworu</Button>
+        <Button Grid.Row="7" Grid.Column="4"  Command="{Binding ShowLyrics}">Tekst utworu 🎤</Button>
         </Grid>
 </Window>

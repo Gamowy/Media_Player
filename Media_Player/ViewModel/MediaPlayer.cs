@@ -54,17 +54,17 @@ namespace Media_Player.ViewModel
                         playlist = null;
                         Tracks = null;
                         SelectedTrack = null;
-                        PlaylistName = "Playlista";
+                        PlaylistName = "🎵 Playlista";
                         break;
                     case PlayMode.Video:
                         playlist = null;
                         Tracks = null;
                         SelectedTrack = null;
-                        PlaylistName = "Playlista";
+                        PlaylistName = "🎵 Playlista";
                         break;
                     case PlayMode.Playlist:
                         MediaElementVM.MediaUri = null;
-                        PlaylistName = $"Playlista: {playlist!.Name}";
+                        PlaylistName = $"🎵 Playlista: {playlist!.Name}";
                         break;
                 }
                 onPropertyChanged(nameof(PlayMode));
