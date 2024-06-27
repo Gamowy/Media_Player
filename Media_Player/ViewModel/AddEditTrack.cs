@@ -10,9 +10,25 @@ namespace Media_Player.ViewModel
 {
     using BaseClass;
     using Media_Player.Model;
+    using System.Diagnostics.Eventing.Reader;
+    using TagLib;
 
-    public class AddTrack : ViewModelBase
+    public class AddEditTrack : ViewModelBase
     {
+
+        public AddEditTrack() 
+        {
+            if(ViewModelShare.selectedTrackShare != null)
+            {
+                TrackName = ViewModelShare.selectedTrackShare.TrackName;
+                Artist = ViewModelShare.selectedTrackShare.Artist;
+                Album = ViewModelShare.selectedTrackShare.Album;
+                Genre = ViewModelShare.selectedTrackShare.Genre;
+                ReleaseYear = ViewModelShare.selectedTrackShare.ReleaseYear.ToString();
+                AudioFilePath = ViewModelShare.selectedTrackShare.FilePath;
+                CoverImage = ViewModelShare.selectedTrackShare.CoverImage;
+            }
+        }
 
         #region Properties
         private string? trackName;
@@ -98,6 +114,20 @@ namespace Media_Player.ViewModel
                 onPropertyChanged(nameof(AudioFilePath));
             }
         }
+
+        private IPicture? coverImage;
+        public IPicture? CoverImage
+        {
+            get
+            {
+                return coverImage;
+            }
+            set
+            {
+                coverImage = value;
+                onPropertyChanged(nameof(CoverImage));
+            }
+        }
         #endregion
 
         #region Methods
@@ -133,6 +163,10 @@ namespace Media_Player.ViewModel
                         {
                             ReleaseYear = tfile.Tag.Year.ToString();
                         }
+                        if(tfile.Tag.Pictures.Count() > 0)
+                        {
+                            CoverImage = tfile.Tag.Pictures[0];
+                        }
                     }
                 }
             }
@@ -151,6 +185,34 @@ namespace Media_Player.ViewModel
             Genre = null;
             ReleaseYear = null;
             AudioFilePath = null;
+            CoverImage = null;
+        }
+
+        private void editTrack()
+        {
+            try
+            {
+                int? year = null;
+                if (ReleaseYear != null && ReleaseYear != String.Empty)
+                {
+                    year = Int32.Parse(ReleaseYear);
+                }
+                ViewModelShare.selectedTrackShare!.TrackName = TrackName!;
+                ViewModelShare.selectedTrackShare!.Artist = Artist;
+                ViewModelShare.selectedTrackShare!.Album = Album;
+                ViewModelShare.selectedTrackShare!.Genre = Genre;
+                ViewModelShare.selectedTrackShare!.ReleaseYear = year;
+                ViewModelShare.selectedTrackShare.FilePath = AudioFilePath!;
+                ViewModelShare.selectedTrackShare!.CoverImage = CoverImage;
+                
+                MessageBox.Show($"Pomyślnie edytowano utwór.", "Sukces!", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                clearForm();
+                MessageBox.Show($"Błąd podczas edytowania utworu:\n{ex.Message}", "Błąd zapisu!", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void addTrackToPlaylist()
@@ -158,7 +220,7 @@ namespace Media_Player.ViewModel
             try
             {
                 int? year = null;
-                if (ReleaseYear != null)
+                if (ReleaseYear != null && ReleaseYear != String.Empty)
                 {
                     year = Int32.Parse(ReleaseYear);
                 }
@@ -168,6 +230,7 @@ namespace Media_Player.ViewModel
                 newTrack.Album = album;
                 newTrack.Genre = genre;
                 newTrack.ReleaseYear = year;
+                newTrack.CoverImage = coverImage;
                 playlist!.addTrack(newTrack);
 
                 clearForm();
@@ -191,11 +254,21 @@ namespace Media_Player.ViewModel
             }
         }
 
-        public ICommand AddNewTrack
+        public ICommand AddEditTrackCommand
         {
             get
             {
-                return new RelayCommand(execute => addTrackToPlaylist(), canExecute => (TrackName != null && AudioFilePath != null && ReleaseYear!=null));
+                return new RelayCommand(execute => {
+                    if (ViewModelShare.selectedTrackShare != null)
+                    {
+                        editTrack();
+                    }
+                    else 
+                    {
+                        addTrackToPlaylist();
+                    }
+                },
+                canExecute => (TrackName != null && AudioFilePath != null && TrackName != String.Empty && AudioFilePath != String.Empty));
             }
         }
         #endregion
