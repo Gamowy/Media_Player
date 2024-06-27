@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.Formats.Tar;
 using System.IO;
+using System.Windows;
 
 namespace Media_Player.Model
 {
@@ -86,10 +87,16 @@ namespace Media_Player.Model
                     track.Genre = genre;
                     track.ReleaseYear = releaseYear;
 
-                    var tfile = TagLib.File.Create(track.FilePath);
-                    if (tfile.Tag.Pictures.Count() > 0)
+                    try
                     {
-                        track.CoverImage = tfile.Tag.Pictures[0];
+                        var tfile = TagLib.File.Create(track.FilePath);
+                        if (tfile.Tag.Pictures.Count() > 0)
+                        {
+                            track.CoverImage = tfile.Tag.Pictures[0];
+                        }
+                    } catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lokalizacja niektórych plików uległa zmianie:\n{ex.Message}", "Zmiana lokalizacji utworów!", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
 
                     Tracks.Add(track);

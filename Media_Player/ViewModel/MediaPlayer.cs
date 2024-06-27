@@ -346,6 +346,22 @@ namespace Media_Player.ViewModel
             }
         }
 
+        private void shuffleTracks()
+        {
+            Random shuffle = new Random();
+            int n = Tracks!.Count;
+            while (n > 1)
+            {
+                n--;
+                int k = shuffle.Next(n + 1);
+                var value = Tracks[k];
+                Tracks[k] = Tracks[n];
+                Tracks[n] = value;
+            }
+            Tracks = null;
+            Tracks = playlist!.Tracks;
+        }
+
         private BitmapImage getCoverBitmap(IPicture picture)
         {
             MemoryStream ms = new MemoryStream(picture.Data.Data);
@@ -441,6 +457,14 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => goToPreviousTrack(), canExecute => (MediaPlayMode == PlayMode.Playlist || MediaPlayMode == PlayMode.Video));
+            }
+        }
+
+        public ICommand ShufflePlaylist
+        {
+            get
+            {
+                return new RelayCommand(execute => shuffleTracks(), canExecute => (playlist != null && Tracks != null && Tracks!.Count > 0));
             }
         }
 

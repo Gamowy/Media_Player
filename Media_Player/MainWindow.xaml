@@ -128,6 +128,15 @@
                 <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}" Background="#666666"/>
             </Grid>
         </Grid>
-        <Button Grid.Row="7" Grid.Column="4"  Command="{Binding ShowLyrics}">Tekst utworu 🎤</Button>
+        <Grid Grid.Row="6" Grid.Column="4" Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="1" Command="{Binding ShufflePlaylist}">Wymieszaj playliste 🔀</Button>
+            <Button Grid.Row="3" Command="{Binding ShowLyrics}">Tekst utworu 🎤</Button>
         </Grid>
+    </Grid>
 </Window>
