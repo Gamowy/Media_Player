@@ -64,7 +64,7 @@ namespace Media_Player.ViewModel
                         break;
                     case PlayMode.Playlist:
                         MediaElementVM.MediaUri = null;
-                        PlaylistName = playlist!.Name;
+                        PlaylistName = $"Playlista: {playlist!.Name}";
                         break;
                 }
                 onPropertyChanged(nameof(PlayMode));
