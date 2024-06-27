@@ -30,7 +30,7 @@ namespace Media_Player.ViewModel
             addTrackWindow = null;
             playlist = null;
             MediaPlayMode = PlayMode.None;
-            defaultCover = new BitmapImage(new Uri(@"/Media_Player;component/Resources/defaultcover.png", UriKind.Relative));
+            defaultCover = new BitmapImage(new Uri(@"/Media_Player;component/Resources/defaultcover.jpg", UriKind.Relative));
         }
 
         #region Properties
@@ -64,7 +64,7 @@ namespace Media_Player.ViewModel
                         break;
                     case PlayMode.Playlist:
                         MediaElementVM.MediaUri = null;
-                        PlaylistName = playlist!.Name;
+                        PlaylistName = $"Playlista: {playlist!.Name}";
                         break;
                 }
                 onPropertyChanged(nameof(PlayMode));

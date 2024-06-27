@@ -62,15 +62,27 @@
             <Button Grid.Column="2" Command="{Binding EditTrack}">Edytuj utwór</Button>
             <Button Grid.Column="4" Command="{Binding DeleteTrack}">Usuń utwór</Button>
         </Grid>
-        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding MediaElementVM.MediaName}" Foreground="White" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <Label Grid.Row="3" Grid.Column="4" Content="{Binding PlaylistName}" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Content="{Binding MediaElementVM.MediaName}" Foreground="#1DB954" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label Grid.Row="3" Grid.Column="4" Content="{Binding PlaylistName}" Foreground="#1DB954" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Border Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Grid.RowSpan="2" Background="Black">
             <Grid>
                 <Image Source="{Binding CoverImage}"/>
                 <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" MediaEnded="MediaElement_MediaEnded" LoadedBehavior="Manual"/>
             </Grid>
         </Border>
-        <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True">
+        <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True" HeadersVisibility="Column" HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black">
+            <DataGrid.Resources>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="#1DB954"/>
+                        </Trigger>
+                    </Style.Triggers>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+                <Style TargetType="DataGridColumnHeader">
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns> 
                 <DataGridTextColumn Header="Utwór" Binding="{Binding TrackName}"/>
                 <DataGridTextColumn Header="Artysta" Binding="{Binding Artist}"/>
@@ -94,14 +106,14 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Slider Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" VerticalAlignment="Center" x:Name="ProgressSlider" Minimum="0" Thumb.DragStarted="ProgressSlider_DragStarted" Thumb.DragCompleted="ProgressSlider_DragCompleted" ValueChanged="ProgressSlider_ValueChanged"/>
-            <Label x:Name="ProgressLabel" Grid.Column="0" Grid.Row="0" Content="00:00/00:00" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" Margin="0"></Label>
-            <Button Grid.Column="0" Grid.Row="2" Command="{Binding GoToPreviousTrack}">
+            <Label x:Name="ProgressLabel" Grid.Column="0" Grid.Row="0" Content="00:00/00:00" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="13"></Label>
+            <Button Grid.Column="0" Grid.Row="2" Command="{Binding GoToPreviousTrack}" Background="#1DB954">
                 <Image Source="/Media_Player;component/Resources/previous.png" Width="60" Height="25"></Image>
             </Button>
-            <Button x:Name="PlayButton" Grid.Column="2" Grid.Row="2" Command="{Binding MediaElementVM.PlayRequested}">
+            <Button x:Name="PlayButton" Grid.Column="2" Grid.Row="2" Command="{Binding MediaElementVM.PlayRequested}" Background="#1DB954">
                 <Image x:Name="PlayButtonImg" Source="/Media_Player;component/Resources/play.png" Width="60" Height="25"></Image>
             </Button>
-            <Button Grid.Column="4" Grid.Row="2" Command="{Binding GoToNextTrack}">
+            <Button Grid.Column="4" Grid.Row="2" Command="{Binding GoToNextTrack}" Background="#1DB954">
                 <Image Source="/Media_Player;component/Resources/next.png" Width="60" Height="25"></Image>
             </Button>
             <Grid Grid.Column="6" Grid.Row="2">
@@ -110,7 +122,7 @@
                     <ColumnDefinition Width="0.1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Command="{Binding MediaElementVM.MuteAudio}">
+                <Button Grid.Column="0" Command="{Binding MediaElementVM.MuteAudio}" Background="#1DB954">
                     <Image x:Name="VolumeButtonImg" Source="/Media_Player;component/Resources/volume.png" Width="60" Height="25"></Image>
                 </Button>
                 <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}"/>

@@ -5,12 +5,12 @@
         Width="600"
         Title="Lyrics" MinHeight="600" MinWidth="600"
         x:Name="LyricWindow"
-        Background="Gray"
+        Background="#222222"
         WindowStartupLocation="CenterScreen"
         >
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <TextBlock x:Name="LyricsTextBlock" TextWrapping="Wrap" FontSize="16" Foreground="White" TextAlignment="Center"/>
+            <TextBlock x:Name="LyricsTextBlock" TextWrapping="Wrap" FontSize="16" Foreground="White" TextAlignment="Center" FontWeight="Bold"/>
         </ScrollViewer>
     </Grid>
 </Window>

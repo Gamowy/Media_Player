@@ -4,6 +4,16 @@
              xmlns:local="clr-namespace:Media_Player"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Border">
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="#666666"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
     </Application.Resources>
 </Application>

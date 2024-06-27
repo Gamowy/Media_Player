@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Resources\defaultcover.png" />
+    <None Remove="Resources\defaultcover.jpg" />
     <None Remove="Resources\mute.png" />
     <None Remove="Resources\next.png" />
     <None Remove="Resources\pause.png" />
@@ -30,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Resources\defaultcover.png" />
+    <Resource Include="Resources\defaultcover.jpg" />
     <Resource Include="Resources\mute.png" />
     <Resource Include="Resources\next.png" />
     <Resource Include="Resources\pause.png" />
