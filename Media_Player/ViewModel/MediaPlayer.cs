@@ -286,21 +286,21 @@ namespace Media_Player.ViewModel
                 try
                 {
                     var lyricsService = new LyricsService();
-                    var lyrics = await lyricsService.FetchLyricsAsync(SelectedTrack.Artist, SelectedTrack.TrackName);
+                    var lyrics = await lyricsService.FetchLyricsAsync(SelectedTrack!.Artist!, SelectedTrack!.TrackName!);
                     Application.Current.Dispatcher.Invoke(() =>
                     {
-                        var lyricsWindow = new LyricsWindow(lyrics);
+                        var lyricsWindow = new LyricsWindow(SelectedTrack!.Artist!, SelectedTrack!.TrackName!, lyrics);
                         lyricsWindow.Show();
                     });
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Error fetching lyrics: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Błąd podczas wczytywania tekstu utworu:\n{ex.Message}", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Please select a track first.", "No Track Selected", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Proszę wybrać utwór.", "Nie wybrano utworu", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
         #endregion
@@ -367,6 +367,14 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => goToPreviousTrack(), canExecute => (MediaPlayMode == PlayMode.Playlist || MediaPlayMode == PlayMode.Video));
+            }
+        }
+
+        public ICommand ShowLyrics
+        {
+            get
+            {
+                return new RelayCommand(execute => FetchAndDisplayLyricsForSelectedTrack(), canExecute => (playlist != null && SelectedTrack != null));
             }
         }
 
