@@ -84,7 +84,7 @@
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns> 
-                <DataGridTextColumn Header="Utwór" Binding="{Binding TrackName}"/>
+                <DataGridTextColumn Header="Nazwa utworu" Binding="{Binding TrackName}"/>
                 <DataGridTextColumn Header="Artysta" Binding="{Binding Artist}"/>
                 <DataGridTextColumn Header="Album" Binding="{Binding Album}"/>
                 <DataGridTextColumn Header="Gatunek" Binding="{Binding Genre}"/>

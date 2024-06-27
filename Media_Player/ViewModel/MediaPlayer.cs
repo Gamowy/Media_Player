@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.IO;
+
 
 namespace Media_Player.ViewModel
 {
     using BaseClass;
     using Media_Player.Model;
-    using System.Configuration;
-    using System.Diagnostics;
-    using System.Diagnostics.Tracing;
-    using System.IO;
-    using System.Windows;
-    using System.Windows.Input;
-    using System.Windows.Markup.Localizer;
-    using System.Windows.Media.Imaging;
-    using System.Xml;
     using TagLib;
 
-    public enum PlayMode { None, Video, Playlist};
+    public enum PlayMode { None, Video, Playlist };
 
     public class MediaPlayer : ViewModelBase
     {
@@ -35,12 +26,15 @@ namespace Media_Player.ViewModel
 
         #region Properties
 
+        public MediaElementViewModel MediaElementVM { get; set; }
+
         AddTrackWindow? addTrackWindow;
+
         BitmapImage defaultCover;
 
         private PlayMode playmode;
-        public PlayMode MediaPlayMode 
-        { 
+        public PlayMode MediaPlayMode
+        {
             get
             {
                 return playmode;
@@ -48,7 +42,8 @@ namespace Media_Player.ViewModel
             set
             {
                 playmode = value;
-                switch (value) {
+                switch (value)
+                {
                     case PlayMode.None:
                         MediaElementVM.MediaUri = null;
                         playlist = null;
@@ -125,13 +120,13 @@ namespace Media_Player.ViewModel
                         MediaElementVM.MediaName = SelectedTrack.TrackName;
                     }
 
-                    if(SelectedTrack.CoverImage != null) 
+                    if (SelectedTrack.CoverImage != null)
                     {
                         CoverImage = getCoverBitmap(SelectedTrack.CoverImage);
                     }
                     else
                     {
-                        
+
                         CoverImage = defaultCover;
                     }
                 }
@@ -160,7 +155,6 @@ namespace Media_Player.ViewModel
             }
         }
 
-        public MediaElementViewModel MediaElementVM { get; set; }
         public EventHandler? GoToEndOfVideo;
         public EventHandler? GoToBeginningOfVideo;
         #endregion
@@ -277,9 +271,9 @@ namespace Media_Player.ViewModel
 
         private void goToNextTrack()
         {
-            if(MediaPlayMode== PlayMode.Playlist && playlist!=null)
+            if (MediaPlayMode == PlayMode.Playlist && playlist != null)
             {
-                if((SelectedIndex+1)<playlist.Tracks.Count)
+                if ((SelectedIndex + 1) < playlist.Tracks.Count)
                 {
                     SelectedIndex++;
                 }
@@ -288,7 +282,7 @@ namespace Media_Player.ViewModel
                     SelectedIndex = 0;
                 }
             }
-            else if(MediaPlayMode==PlayMode.Video)
+            else if (MediaPlayMode == PlayMode.Video)
             {
                 if (GoToEndOfVideo != null)
                 {
@@ -307,7 +301,7 @@ namespace Media_Player.ViewModel
                 }
                 else
                 {
-                    SelectedIndex = playlist.Tracks.Count-1;
+                    SelectedIndex = playlist.Tracks.Count - 1;
                 }
             }
             else if (MediaPlayMode == PlayMode.Video)
@@ -321,9 +315,9 @@ namespace Media_Player.ViewModel
 
         public void TrackEnded()
         {
-            if(MediaPlayMode==PlayMode.Playlist && playlist != null)
+            if (MediaPlayMode == PlayMode.Playlist && playlist != null)
             {
-                goToNextTrack();    
+                goToNextTrack();
             }
         }
 
@@ -351,7 +345,7 @@ namespace Media_Player.ViewModel
                 MessageBox.Show("Proszę wybrać utwór.", "Nie wybrano utworu", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-            
+
         private BitmapImage getCoverBitmap(IPicture picture)
         {
             MemoryStream ms = new MemoryStream(picture.Data.Data);
@@ -449,7 +443,7 @@ namespace Media_Player.ViewModel
                 return new RelayCommand(execute => goToPreviousTrack(), canExecute => (MediaPlayMode == PlayMode.Playlist || MediaPlayMode == PlayMode.Video));
             }
         }
-        
+
         public ICommand ShowLyrics
         {
             get

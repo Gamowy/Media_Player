@@ -1,20 +1,10 @@
-﻿using Media_Player.ViewModel.BaseClass;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Media_Player.ViewModel
+﻿namespace Media_Player.ViewModel
 {
     using BaseClass;
-    using Media_Player.Model;
     using System.Diagnostics;
-    using System.Diagnostics.Tracing;
-    using System.Windows.Controls;
     using System.Windows.Input;
 
-    public class MediaElementViewModel:ViewModelBase
+    public class MediaElementViewModel : ViewModelBase
     {
         public MediaElementViewModel()
         {
@@ -75,22 +65,24 @@ namespace Media_Player.ViewModel
         public bool IsPlaying
         {
             get { return _isPlaying; }
-            set {
+            set
+            {
                 _isPlaying = value;
-            onPropertyChanged(nameof(IsPlaying));}
+                onPropertyChanged(nameof(IsPlaying));
+            }
         }
 
         public event EventHandler? VolumeButtonUpdate;
 
         private double _previousVolumeLevel;
-        
+
         private double _volumeLevel;
         public double VolumeLevel
         {
             get { return _volumeLevel; }
             set
             {
-                _previousVolumeLevel =  _volumeLevel;
+                _previousVolumeLevel = _volumeLevel;
                 _volumeLevel = value;
                 onPropertyChanged(nameof(VolumeLevel));
                 if (VolumeButtonUpdate != null)

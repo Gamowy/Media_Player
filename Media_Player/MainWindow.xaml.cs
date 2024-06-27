@@ -1,17 +1,7 @@
-﻿using Media_Player.ViewModel;
-using System;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Media_Player
@@ -73,8 +63,8 @@ namespace Media_Player
 
         private void ProgressSlider_ValueChanged(object? sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            TimeSpan timeElapsed=TimeSpan.FromSeconds(ProgressSlider.Value);
-            ProgressLabel.Content =$"{ (int)timeElapsed.TotalMinutes}:{timeElapsed.Seconds:00}"+"/"+durationString;
+            TimeSpan timeElapsed = TimeSpan.FromSeconds(ProgressSlider.Value);
+            ProgressLabel.Content = $"{(int)timeElapsed.TotalMinutes}:{timeElapsed.Seconds:00}" + "/" + durationString;
         }
 
         private void Play_Request()
@@ -87,7 +77,7 @@ namespace Media_Player
             }
             else
             {
-                if(ProgressSlider.Value == ProgressSlider.Maximum)
+                if (ProgressSlider.Value == ProgressSlider.Maximum)
                 {
                     MediaElement.Position = TimeSpan.FromSeconds(0);
                 }

@@ -1,18 +1,11 @@
 ﻿using QuizApp.Model.Database;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Media_Player.Model
 {
-    public class Playlist 
+    public class Playlist
     {
         #region SQL COMMANDS
         private const string CREATE_TRACKS_TB = "CREATE TABLE tracks (id int primary key, track_name text not null, artist text, album text, genre text, release_year int, file_path text)";

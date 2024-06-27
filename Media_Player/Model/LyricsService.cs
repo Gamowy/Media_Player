@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
 
 public class LyricsService
 {
@@ -25,7 +23,7 @@ public class LyricsService
                     string responseData = await response.Content.ReadAsStringAsync();
                     // Parse the JSON to extract the "lyrics" field
                     var jsonResponse = JObject.Parse(responseData);
-                    string lyrics = jsonResponse["lyrics"].ToString();
+                    string lyrics = jsonResponse["lyrics"]!.ToString();
 
                     // Check if the lyrics start with "Paroles de la chanson" and remove it
                     if (lyrics.StartsWith("Paroles de la chanson"))

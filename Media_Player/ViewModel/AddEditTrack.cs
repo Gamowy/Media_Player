@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 
 namespace Media_Player.ViewModel
 {
     using BaseClass;
     using Media_Player.Model;
-    using System.Diagnostics.Eventing.Reader;
     using TagLib;
 
     public class AddEditTrack : ViewModelBase
     {
 
-        public AddEditTrack() 
+        public AddEditTrack()
         {
-            if(ViewModelShare.selectedTrackShare != null)
+            if (ViewModelShare.selectedTrackShare != null)
             {
                 TrackName = ViewModelShare.selectedTrackShare.TrackName;
                 Artist = ViewModelShare.selectedTrackShare.Artist;
@@ -147,10 +141,11 @@ namespace Media_Player.ViewModel
                     if (filePath != string.Empty)
                     {
                         AudioFilePath = filePath;
-                        var tfile = TagLib.File.Create(AudioFilePath);
 
+                        // Read metadata from audio file
+                        var tfile = TagLib.File.Create(AudioFilePath);
                         TrackName = tfile.Tag.Title;
-                        if(tfile.Tag.Performers.Count() > 0)
+                        if (tfile.Tag.Performers.Count() > 0)
                         {
                             Artist = tfile.Tag.Performers[0];
                         }
@@ -163,7 +158,7 @@ namespace Media_Player.ViewModel
                         {
                             ReleaseYear = tfile.Tag.Year.ToString();
                         }
-                        if(tfile.Tag.Pictures.Count() > 0)
+                        if (tfile.Tag.Pictures.Count() > 0)
                         {
                             CoverImage = tfile.Tag.Pictures[0];
                         }
@@ -204,7 +199,7 @@ namespace Media_Player.ViewModel
                 ViewModelShare.selectedTrackShare!.ReleaseYear = year;
                 ViewModelShare.selectedTrackShare.FilePath = AudioFilePath!;
                 ViewModelShare.selectedTrackShare!.CoverImage = CoverImage;
-                
+
                 MessageBox.Show($"Pomyślnie edytowano utwór.", "Sukces!", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
@@ -258,12 +253,13 @@ namespace Media_Player.ViewModel
         {
             get
             {
-                return new RelayCommand(execute => {
+                return new RelayCommand(execute =>
+                {
                     if (ViewModelShare.selectedTrackShare != null)
                     {
                         editTrack();
                     }
-                    else 
+                    else
                     {
                         addTrackToPlaylist();
                     }
