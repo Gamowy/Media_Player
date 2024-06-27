@@ -118,7 +118,7 @@ namespace Media_Player.ViewModel
                     MediaElementVM.MediaUri = new Uri(SelectedTrack.FilePath);
                     if (SelectedTrack.Artist != null && SelectedTrack.Artist != String.Empty)
                     {
-                        MediaElementVM.MediaName = $"{SelectedTrack.TrackName} - {SelectedTrack.Artist}";
+                        MediaElementVM.MediaName = $"{SelectedTrack.Artist} - {SelectedTrack.TrackName}";
                     }
                     else
                     {

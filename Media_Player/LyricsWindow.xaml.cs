@@ -27,7 +27,7 @@ namespace Media_Player
             LyricsTextBlock.Text = formattedLyrics;
             if (Artist != null && Title != null && Artist != String.Empty && Title != String.Empty) 
             {
-                LyricWindow.Title = $"Tekst utworu: {Title} - {Artist}";
+                LyricWindow.Title = $"Tekst utworu: {Artist} - {Title}";
             }
          }
     }
