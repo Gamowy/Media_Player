@@ -124,7 +124,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="1">Equalizer</Button>
-            <Button Grid.Row="3">Tekst utworu</Button>
+            <Button Grid.Row="3" Command="{Binding ShowLyrics}">Tekst utworu</Button>
         </Grid>
     </Grid>
 </Window>
