@@ -342,6 +342,7 @@ namespace Media_Player.ViewModel
             {
                 MessageBox.Show("Proszę wybrać utwór.", "Nie wybrano utworu", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
             
         private BitmapImage getCoverBitmap(IPicture picture)
         {
@@ -365,6 +366,7 @@ namespace Media_Player.ViewModel
             bitmap.EndInit();
             return bitmap;
         }
+
         #endregion
 
         #region Commands
