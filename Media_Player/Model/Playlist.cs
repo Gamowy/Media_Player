@@ -1,6 +1,7 @@
 ﻿using QuizApp.Model.Database;
 using System.Collections.ObjectModel;
 using System.Data.SQLite;
+using System.Formats.Tar;
 using System.IO;
 
 namespace Media_Player.Model
@@ -66,7 +67,11 @@ namespace Media_Player.Model
                     string? artist = reader["artist"].ToString();
                     string? album = reader["album"].ToString();
                     string? genre = reader["genre"].ToString();
-                    int? releaseYear = (int)reader["release_year"];
+                    int? releaseYear = null;
+                    if(int.TryParse(reader["release_year"].ToString(), out int result))
+                    {
+                        releaseYear = (int)reader["release_year"];
+                    }
                     string filePath = reader["file_path"].ToString()!;
 
                     if (id > LastTrackId)
@@ -80,6 +85,13 @@ namespace Media_Player.Model
                     track.Album = album;
                     track.Genre = genre;
                     track.ReleaseYear = releaseYear;
+
+                    var tfile = TagLib.File.Create(track.FilePath);
+                    if (tfile.Tag.Pictures.Count() > 0)
+                    {
+                        track.CoverImage = tfile.Tag.Pictures[0];
+                    }
+
                     Tracks.Add(track);
                 }
                 connection.Clone();
