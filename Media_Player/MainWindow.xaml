@@ -70,7 +70,7 @@
                 <MediaElement Name="MediaElement" Source="{Binding MediaElementVM.MediaUri}" Volume="{Binding MediaElementVM.VolumeLevel}" MediaEnded="MediaElement_MediaEnded" LoadedBehavior="Manual"/>
             </Grid>
         </Border>
-        <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True" HeadersVisibility="Column">
+        <DataGrid x:Name="PlaylistDataGrid" ItemsSource="{Binding Path=Tracks}" SelectedItem="{Binding SelectedTrack}" SelectedIndex="{Binding SelectedIndex}" Grid.Column="4" Grid.Row="4" Grid.RowSpan="2" AutoGenerateColumns="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False" CanUserSortColumns="True" HeadersVisibility="Column" HorizontalGridLinesBrush="Black" VerticalGridLinesBrush="Black">
             <DataGrid.Resources>
                 <Style TargetType="{x:Type DataGridCell}">
                     <Style.Triggers>
@@ -78,6 +78,9 @@
                             <Setter Property="Background" Value="#1DB954"/>
                         </Trigger>
                     </Style.Triggers>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+                <Style TargetType="DataGridColumnHeader">
                 </Style>
             </DataGrid.Resources>
             <DataGrid.Columns> 
