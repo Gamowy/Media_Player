@@ -105,7 +105,7 @@
                 <RowDefinition Height="0.9*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Slider Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" VerticalAlignment="Center" x:Name="ProgressSlider" Minimum="0" Thumb.DragStarted="ProgressSlider_DragStarted" Thumb.DragCompleted="ProgressSlider_DragCompleted" ValueChanged="ProgressSlider_ValueChanged"/>
+            <Slider Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" VerticalAlignment="Center" x:Name="ProgressSlider" Minimum="0" Thumb.DragStarted="ProgressSlider_DragStarted" Thumb.DragCompleted="ProgressSlider_DragCompleted" ValueChanged="ProgressSlider_ValueChanged" Background="#1DB954"/>
             <Label x:Name="ProgressLabel" Grid.Column="0" Grid.Row="0" Content="00:00/00:00" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="13"></Label>
             <Button Grid.Column="0" Grid.Row="2" Command="{Binding GoToPreviousTrack}" Background="#1DB954">
                 <Image Source="/Media_Player;component/Resources/previous.png" Width="60" Height="25"></Image>
@@ -122,10 +122,10 @@
                     <ColumnDefinition Width="0.1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Command="{Binding MediaElementVM.MuteAudio}" Background="#1DB954">
+                <Button Grid.Column="0" Command="{Binding MediaElementVM.MuteAudio}" Background="#666666">
                     <Image x:Name="VolumeButtonImg" Source="/Media_Player;component/Resources/volume.png" Width="60" Height="25"></Image>
                 </Button>
-                <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}"/>
+                <Slider x:Name="VolumeSlider" Grid.Column="2" VerticalAlignment="Center" Minimum="0" Maximum="1" Value="{Binding MediaElementVM.VolumeLevel, Mode=TwoWay}" Background="#666666"/>
             </Grid>
         </Grid>
         <Button Grid.Row="7" Grid.Column="4"  Command="{Binding ShowLyrics}">Tekst utworu</Button>
