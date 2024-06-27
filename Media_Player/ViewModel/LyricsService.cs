@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 public class LyricsService
 {
@@ -22,9 +23,18 @@ public class LyricsService
                 if (response.IsSuccessStatusCode)
                 {
                     string responseData = await response.Content.ReadAsStringAsync();
-                    // Assuming the API returns a JSON object with a "lyrics" field
-                    // You might need to parse this JSON to extract the lyrics
-                    return responseData; // Adjust this line based on actual API response structure
+                    // Parse the JSON to extract the "lyrics" field
+                    var jsonResponse = JObject.Parse(responseData);
+                    string lyrics = jsonResponse["lyrics"].ToString();
+
+                    // Check if the lyrics start with "Paroles de la chanson" and remove it
+                    if (lyrics.StartsWith("Paroles de la chanson"))
+                    {
+                        int firstLineEndIndex = lyrics.IndexOf("\n") + 1; // Find the end of the first line
+                        lyrics = lyrics.Substring(firstLineEndIndex); // Remove the first line
+                    }
+
+                    return lyrics;
                 }
                 else
                 {
