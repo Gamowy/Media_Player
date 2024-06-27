@@ -116,7 +116,15 @@ namespace Media_Player.ViewModel
                 if (SelectedTrack != null)
                 {
                     MediaElementVM.MediaUri = new Uri(SelectedTrack.FilePath);
-                    MediaElementVM.MediaName = SelectedTrack.TrackName;
+                    if (SelectedTrack.Artist != null && SelectedTrack.Artist != String.Empty)
+                    {
+                        MediaElementVM.MediaName = $"{SelectedTrack.TrackName} - {SelectedTrack.Artist}";
+                    }
+                    else
+                    {
+                        MediaElementVM.MediaName = SelectedTrack.TrackName;
+                    }
+
                     if(SelectedTrack.CoverImage != null) 
                     {
                         CoverImage = getCoverBitmap(SelectedTrack.CoverImage);

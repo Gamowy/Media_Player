@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Height="500" Width="400"
-        Background="Gray"
+        Background="#222222"
         WindowStartupLocation="CenterScreen"
         >
     <Window.DataContext>

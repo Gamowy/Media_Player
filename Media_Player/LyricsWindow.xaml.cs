@@ -25,7 +25,7 @@ namespace Media_Player
             // Replace \n and \r with the environment's newline character
             string formattedLyrics = lyrics.Replace("\\n", Environment.NewLine).Replace("\\r", "");
             LyricsTextBlock.Text = formattedLyrics;
-            if (Artist != null && Title != null) 
+            if (Artist != null && Title != null && Artist != String.Empty && Title != String.Empty) 
             {
                 LyricWindow.Title = $"Tekst utworu: {Title} - {Artist}";
             }
