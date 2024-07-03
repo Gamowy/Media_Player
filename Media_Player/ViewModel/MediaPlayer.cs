@@ -12,7 +12,6 @@ namespace Media_Player.ViewModel
     using TagLib;
 
     public enum PlayMode { None, Video, Playlist };
-
     public class MediaPlayer : ViewModelBase
     {
         public MediaPlayer()
@@ -374,15 +373,10 @@ namespace Media_Player.ViewModel
             return bitmap;
         }
 
-        private BitmapImage getCoverImage(IPicture picture)
+        private void showEqualizerWindow()
         {
-            MemoryStream ms = new MemoryStream(picture.Data.Data);
-            ms.Seek(0, SeekOrigin.Begin);
-            BitmapImage bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = ms;
-            bitmap.EndInit();
-            return bitmap;
+            EqualizerWindow EqWindow = new EqualizerWindow(SelectedTrack.FilePath);
+            EqWindow.Show();
         }
 
         #endregion
@@ -473,6 +467,15 @@ namespace Media_Player.ViewModel
             get
             {
                 return new RelayCommand(execute => FetchAndDisplayLyricsForSelectedTrack(), canExecute => (playlist != null && SelectedTrack != null));
+            }
+        }
+
+        public ICommand ShowEqualizer
+        {
+            get
+            {
+                return new RelayCommand(execute => showEqualizerWindow(),
+                    canExecute => (SelectedTrack != null ));
             }
         }
         #endregion

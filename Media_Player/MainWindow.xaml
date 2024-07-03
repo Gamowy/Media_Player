@@ -99,14 +99,17 @@
                 <ColumnDefinition Width="0.05*"/>
                 <ColumnDefinition Width="0.45*"/>
                 <ColumnDefinition Width="0.05*"/>
-                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="0.70*"/>
+                <ColumnDefinition Width="0.05*"/>
+                <ColumnDefinition Width="0.25*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.9*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Slider Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="7" VerticalAlignment="Center" x:Name="ProgressSlider" Minimum="0" Thumb.DragStarted="ProgressSlider_DragStarted" Thumb.DragCompleted="ProgressSlider_DragCompleted" ValueChanged="ProgressSlider_ValueChanged" Background="#1DB954"/>
+            <Slider Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="6" VerticalAlignment="Center" x:Name="ProgressSlider" Minimum="0" Thumb.DragStarted="ProgressSlider_DragStarted" Thumb.DragCompleted="ProgressSlider_DragCompleted" ValueChanged="ProgressSlider_ValueChanged" Background="#1DB954"/>
             <Label x:Name="ProgressLabel" Grid.Column="0" Grid.Row="0" Content="00:00/00:00" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="13"></Label>
+            <ComboBox Name="CBox" Grid.Column="8" Grid.Row="0" ItemsSource="{Binding MediaElementVM.PlaybackSpeedOptions}" SelectedItem="{Binding MediaElementVM.PlaybackSpeed}" Text="1.00" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="15"/>
             <Button Grid.Column="0" Grid.Row="2" Command="{Binding GoToPreviousTrack}" Background="#1DB954">
                 <Image Source="/Media_Player;component/Resources/previous.png" Width="60" Height="25"></Image>
             </Button>
@@ -116,7 +119,7 @@
             <Button Grid.Column="4" Grid.Row="2" Command="{Binding GoToNextTrack}" Background="#1DB954">
                 <Image Source="/Media_Player;component/Resources/next.png" Width="60" Height="25"></Image>
             </Button>
-            <Grid Grid.Column="6" Grid.Row="2">
+            <Grid Grid.Column="6" Grid.Row="2" Grid.ColumnSpan="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.5*"></ColumnDefinition>
                     <ColumnDefinition Width="0.1*"></ColumnDefinition>
@@ -134,9 +137,12 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="0.2*"/>
                 <RowDefinition Height="1*"/>
+                <RowDefinition Height="0.2*"/>
+                <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Button Grid.Row="1" Command="{Binding ShufflePlaylist}">Wymieszaj playliste 🔀</Button>
             <Button Grid.Row="3" Command="{Binding ShowLyrics}">Tekst utworu 🎤</Button>
+            <Button Grid.Row="5" Command="{Binding ShowEqualizer}" Click="EqualizerButton_Click" >Equalizer 🎚️</Button>
         </Grid>
     </Grid>
 </Window>

@@ -1,7 +1,9 @@
 ﻿namespace Media_Player.ViewModel
 {
     using BaseClass;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     public class MediaElementViewModel : ViewModelBase
@@ -11,6 +13,8 @@
             _isPlaying = false;
             _volumeLevel = 0.5;
             MediaName = null;
+            _playbackSpeedOptions = new ObservableCollection<double> { 0.25, 0.5, 1.0, 1.5, 2.0 };
+            _playbackSpeed = 1.0;
         }
 
         #region Properties
@@ -75,7 +79,6 @@
         public event EventHandler? VolumeButtonUpdate;
 
         private double _previousVolumeLevel;
-
         private double _volumeLevel;
         public double VolumeLevel
         {
@@ -92,6 +95,24 @@
             }
         }
 
+        public event EventHandler? PlaybackSpeedUpdate;
+        private ObservableCollection<double> _playbackSpeedOptions;
+        public ObservableCollection<double> PlaybackSpeedOptions
+        {
+            get { return _playbackSpeedOptions; }
+        }
+        private double _playbackSpeed;
+        public double PlaybackSpeed
+        {
+            get { return _playbackSpeed; }
+            set
+            {
+                _playbackSpeed = value;
+                onPropertyChanged(nameof(PlaybackSpeed));
+                if (PlaybackSpeedUpdate != null)
+                    PlaybackSpeedUpdate(this, EventArgs.Empty);
+            }
+        }
         #endregion
 
         #region Methods

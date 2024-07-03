@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media.Imaging;
@@ -26,6 +27,7 @@ namespace Media_Player
             MediaPlayerVM.MediaElementVM.VolumeButtonUpdate += (sender, e) => Change_Volume_Button_Image();
             MediaPlayerVM.GoToBeginningOfVideo += (sender, e) => GoToBeginningOfVideo();
             MediaPlayerVM.GoToEndOfVideo += (sender, e) => GoToEndOfVideo();
+            MediaPlayerVM.MediaElementVM.PlaybackSpeedUpdate += (sender, e) => SetPlaybackSpeed();
         }
 
         private void timer_Tick(object? sender, EventArgs e)
@@ -117,6 +119,17 @@ namespace Media_Player
         {
             MediaElement.Position = TimeSpan.FromSeconds(0);
             ProgressSlider.Value = MediaElement.Position.TotalSeconds;
+        }
+
+        private void SetPlaybackSpeed()
+        {
+            MediaElement.SpeedRatio = MediaPlayerVM.MediaElementVM.PlaybackSpeed;
+        }
+
+        private void EqualizerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MediaPlayerVM.MediaElementVM.IsPlaying)
+                Play_Request();
         }
     }
 }
